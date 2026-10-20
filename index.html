@@ -7,6 +7,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -34,8 +39,8 @@
 <body class="min-h-screen flex flex-col antialiased bg-slate-950 text-slate-100" id="app-body">
 
   <!-- Header / Hero Section -->
-  <header id="hero-banner" class="dark-amber-gradient text-white relative shadow-2xl border-b border-amber-900/40 overflow-hidden">
-    <div id="banner-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
+  <header id="hero-banner" class="dark-amber-gradient text-white relative shadow-2xl border-b border-amber-900/40 overflow-hidden bg-cover bg-center transition-all duration-300">
+    <div id="banner-overlay" class="absolute inset-0 bg-slate-950/70 backdrop-blur-[1px]"></div>
 
     <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12 relative z-10">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -50,7 +55,7 @@
             Friendsgiving 6: Whoops I missed one
           </h1>
           
-          <div class="space-y-3 text-amber-100/90 text-sm sm:text-base leading-relaxed bg-slate-950/60 backdrop-blur-md p-4 rounded-xl border border-amber-500/20 shadow-inner">
+          <div class="space-y-3 text-amber-100/90 text-sm sm:text-base leading-relaxed bg-slate-950/75 backdrop-blur-md p-4 rounded-xl border border-amber-500/20 shadow-inner">
             <p>
               The sixth annual Friendsgiving celebration at our home, a time for us get together and be thankful for all that is good - Beer, Food, and Friends, in no particular order.
             </p>
@@ -65,9 +70,8 @@
 
         <!-- Custom Graphic Box -->
         <div class="flex-shrink-0 flex flex-col items-center">
-          <div id="hero-image-container" class="w-48 h-48 sm:w-56 sm:h-56 bg-slate-900 border-2 border-amber-500/30 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden relative group">
+          <div id="hero-image-container" class="w-48 h-48 sm:w-56 sm:h-56 bg-slate-900/80 border-2 border-amber-500/30 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden relative group backdrop-blur-sm">
             <div id="artwork-display" class="w-full h-full flex items-center justify-center p-2">
-              <!-- SVG Artwork: Drunk Turkey Passed Out on Couch -->
               <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <rect width="200" height="200" fill="#1E1B4B"/>
                 <rect x="20" y="110" width="160" height="60" rx="12" fill="#7C2D12"/>
@@ -104,11 +108,11 @@
 
             <button onclick="openImageModal()" class="absolute inset-0 bg-slate-950/80 text-white font-medium text-xs flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity p-2 text-center">
               <i class="ph-bold ph-paint-brush text-2xl mb-1 text-amber-400"></i>
-              Customize Graphic
+              Customize Graphic / Banner
             </button>
           </div>
           <button onclick="openImageModal()" class="mt-2 text-xs text-amber-400/80 hover:text-amber-300 underline flex items-center gap-1">
-            <i class="ph-bold ph-gear"></i> Change Graphic / Theme
+            <i class="ph-bold ph-gear"></i> Change Graphic / Banner
           </button>
         </div>
 
@@ -135,7 +139,7 @@
   <!-- Main Container -->
   <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 space-y-8">
 
-    <!-- ANNOUNCEMENTS SECTION (Publicly Visible if Active) -->
+    <!-- ANNOUNCEMENTS SECTION -->
     <section id="announcement-banner" class="hidden bg-amber-950/40 border border-amber-500/30 rounded-2xl p-5 shadow-lg relative overflow-hidden">
       <div class="flex items-start gap-3">
         <div class="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30 text-xl flex-shrink-0">
@@ -151,7 +155,7 @@
       </div>
     </section>
 
-    <!-- HOST CONTROLS DRAWER (PASSWORD PROTECTED) -->
+    <!-- HOST CONTROLS DRAWER -->
     <section id="host-controls-panel" class="hidden bg-slate-900 border-2 border-amber-600/50 rounded-2xl p-6 shadow-xl space-y-6">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center gap-2 text-amber-400">
@@ -161,12 +165,12 @@
         <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-bold">Host Unlocked</span>
       </div>
 
-      <!-- Announcements Manager in Host Panel -->
+      <!-- Announcements Manager -->
       <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
         <h3 class="font-semibold text-sm text-slate-200 flex items-center gap-2">
           <i class="ph-bold ph-megaphone text-amber-500"></i> Post Announcement / Update
         </h3>
-        <p class="text-xs text-slate-400">Broadcast important details (parking info, time changes, arrival instructions) to all guests.</p>
+        <p class="text-xs text-slate-400">Broadcast important details (parking info, time changes, arrival instructions) to all guests in real time.</p>
         
         <form onsubmit="postAnnouncement(event)" class="space-y-3">
           <textarea id="announcement-input" rows="2" placeholder="Type an update for guests..." class="w-full text-xs p-2.5 border border-slate-700 rounded-lg bg-slate-900 text-slate-100 focus:ring-2 focus:ring-amber-500 custom-scrollbar"></textarea>
@@ -189,7 +193,7 @@
             <i class="ph-bold ph-calendar-check text-amber-500"></i> Event Phase & Lock Winner Date
           </h3>
           <p class="text-xs text-slate-400">
-            Locking in a date closes the poll phase and switches the site over to RSVP & Potluck mode.
+            Locking in a date closes the poll phase for everyone and switches the site over to RSVP & Potluck mode.
           </p>
           
           <div class="space-y-2">
@@ -229,7 +233,6 @@
           <div class="space-y-2">
             <label class="block text-xs font-medium text-slate-400">Current Candidate Dates (Click X to remove):</label>
             <div id="host-dates-manage-list" class="space-y-1.5 max-h-36 overflow-y-auto custom-scrollbar pr-1">
-              <!-- Populated via JS -->
             </div>
           </div>
 
@@ -241,7 +244,7 @@
               <i class="ph-bold ph-trash text-sm"></i>
               Clear All Entries & Reset App Data
             </button>
-            <p class="text-[10px] text-red-400/70 text-center mt-1">Wipes all votes, RSVPs, and potluck dishes permanently.</p>
+            <p class="text-[10px] text-red-400/70 text-center mt-1">Wipes all votes, RSVPs, and potluck dishes permanently across all devices.</p>
           </div>
         </div>
 
@@ -260,12 +263,9 @@
         <p class="text-sm text-slate-400 mt-1">Select all dates that work for you. You can check multiple choices!</p>
       </div>
 
-      <!-- Date Options List -->
       <div id="poll-options-container" class="space-y-4">
-        <!-- Rendered via JS -->
       </div>
 
-      <!-- Submit / Record Vote Form -->
       <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
         <h3 class="text-sm font-semibold text-slate-200">Save / Update Your Vote</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -280,7 +280,6 @@
     <!-- PHASE 2: CONFIRMED RSVP & POTLUCK SECTION -->
     <section id="phase-rsvp" class="hidden space-y-8">
       
-      <!-- Date Confirmed Banner -->
       <div class="bg-emerald-950 border border-emerald-800/80 text-white rounded-2xl p-6 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="space-y-1 text-center sm:text-left">
           <span class="text-xs uppercase font-bold tracking-widest text-emerald-400">Official Date Locked In!</span>
@@ -294,7 +293,7 @@
         </div>
       </div>
 
-      <!-- RSVP Form Card -->
+      <!-- RSVP Form -->
       <div class="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800 space-y-6">
         <h2 class="text-xl font-bold font-heading text-amber-400 flex items-center gap-2 border-b border-slate-800 pb-3">
           <i class="ph-bold ph-envelope-open text-amber-500"></i> RSVP & Guest Registration
@@ -328,7 +327,7 @@
         </form>
       </div>
 
-      <!-- Attendance List Summary -->
+      <!-- Attendees Summary -->
       <div class="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800 space-y-4">
         <h3 class="text-lg font-bold font-heading text-slate-100 flex items-center justify-between">
           <span>Who's Coming (<span id="count-attending" class="text-amber-400">0</span>)</span>
@@ -336,11 +335,10 @@
         </h3>
 
         <div id="rsvp-attendees-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          <!-- Populated by JS -->
         </div>
       </div>
 
-      <!-- POTLUCK DISH BOARD -->
+      <!-- Potluck Board -->
       <div class="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800 space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
           <div>
@@ -354,7 +352,6 @@
           </button>
         </div>
 
-        <!-- Add Dish Form -->
         <form id="add-dish-form" onsubmit="submitDish(event)" class="hidden bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -382,9 +379,7 @@
           </div>
         </form>
 
-        <!-- Category Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="potluck-categories-grid">
-          <!-- Populated by JS -->
         </div>
       </div>
 
@@ -392,7 +387,6 @@
 
   </main>
 
-  <!-- Footer -->
   <footer class="bg-slate-950 text-slate-500 text-xs py-6 text-center border-t border-slate-900">
     <p>Friendsgiving 6: Whoops I missed one &bull; Hosted with ❤️ and Beer</p>
   </footer>
@@ -466,6 +460,14 @@
         </div>
       </div>
 
+      <!-- Banner Mode Selector -->
+      <div class="space-y-2 border-t border-slate-800 pt-3">
+        <label class="flex items-center gap-2 text-xs font-bold text-slate-300 cursor-pointer">
+          <input type="checkbox" id="banner-bg-checkbox" onchange="toggleBannerBackground(event)" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-500 border-slate-700 bg-slate-950">
+          Apply Custom Image as Full Banner Background
+        </label>
+      </div>
+
       <div class="pt-2 border-t border-slate-800 flex justify-end">
         <button onclick="closeImageModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 px-4 rounded-lg">
           Done
@@ -474,53 +476,96 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT APP LOGIC -->
+  <!-- JAVASCRIPT & FIREBASE SYNC LOGIC -->
   <script>
-    const DEFAULT_STATE = {
+    // ----------------------------------------------------
+    // STEP 1: Paste Your Free Firebase Config Below
+    // ----------------------------------------------------
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    let db;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.database();
+    } catch (e) {
+      console.warn("Firebase not configured yet. Falling back to local state.", e);
+    }
+
+    const DEFAULT_DATES = [
+      { id: 1, text: 'Saturday, Nov 7 @ 5:00 PM', votes: [] },
+      { id: 2, text: 'Sunday, Nov 8 @ 5:00 PM', votes: [] },
+      { id: 3, text: 'Saturday, Nov 14 @ 5:00 PM', votes: [] },
+      { id: 4, text: 'Sunday, Nov 15 @ 5:00 PM', votes: [] },
+      { id: 5, text: 'Saturday, Nov 21 @ 5:00 PM', votes: [] },
+      { id: 6, text: 'Sunday, Nov 22 @ 5:00 PM', votes: [] },
+      { id: 7, text: 'Saturday, Nov 28 @ 5:00 PM', votes: [] },
+      { id: 8, text: 'Sunday, Nov 29 @ 5:00 PM', votes: [] },
+      { id: 9, text: 'Saturday, Dec 5 @ 5:00 PM', votes: [] },
+      { id: 10, text: 'Sunday, Dec 6 @ 5:00 PM', votes: [] },
+      { id: 11, text: 'Saturday, Dec 12 @ 5:00 PM', votes: [] },
+      { id: 12, text: 'Sunday, Dec 13 @ 5:00 PM', votes: [] },
+      { id: 13, text: 'Saturday, Dec 19 @ 5:00 PM', votes: [] },
+      { id: 14, text: 'Sunday, Dec 20 @ 5:00 PM', votes: [] }
+    ];
+
+    let appData = {
       hostPassword: 'beer2026',
       isHostUnlocked: false,
-      phase: 'poll', // 'poll' or 'rsvp'
+      phase: 'poll',
       lockedDate: null,
       customImage: null,
+      isBannerBg: false,
       presetGraphic: 'turkey',
       announcement: null,
-      dates: [
-        { id: 1, text: 'Saturday, Nov 7 @ 5:00 PM', votes: [] },
-        { id: 2, text: 'Sunday, Nov 8 @ 5:00 PM', votes: [] },
-        { id: 3, text: 'Saturday, Nov 14 @ 5:00 PM', votes: [] },
-        { id: 4, text: 'Sunday, Nov 15 @ 5:00 PM', votes: [] },
-        { id: 5, text: 'Saturday, Nov 21 @ 5:00 PM', votes: [] },
-        { id: 6, text: 'Sunday, Nov 22 @ 5:00 PM', votes: [] },
-        { id: 7, text: 'Saturday, Nov 28 @ 5:00 PM', votes: [] },
-        { id: 8, text: 'Sunday, Nov 29 @ 5:00 PM', votes: [] },
-        { id: 9, text: 'Saturday, Dec 5 @ 5:00 PM', votes: [] },
-        { id: 10, text: 'Sunday, Dec 6 @ 5:00 PM', votes: [] },
-        { id: 11, text: 'Saturday, Dec 12 @ 5:00 PM', votes: [] },
-        { id: 12, text: 'Sunday, Dec 13 @ 5:00 PM', votes: [] },
-        { id: 13, text: 'Saturday, Dec 19 @ 5:00 PM', votes: [] },
-        { id: 14, text: 'Sunday, Dec 20 @ 5:00 PM', votes: [] }
-      ],
+      dates: DEFAULT_DATES,
       rsvps: [],
       potluck: []
     };
 
-    let appData = loadState();
-
-    function loadState() {
-      const saved = localStorage.getItem('friendsgiving_app_v7');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error("Failed to load state", e);
+    // Listen to Firebase database for real-time live updates
+    if (db) {
+      db.ref('friendsgiving_app').on('value', (snapshot) => {
+        const liveData = snapshot.val();
+        if (liveData) {
+          const hostUnlockedMemory = appData.isHostUnlocked;
+          appData = { ...appData, ...liveData };
+          appData.isHostUnlocked = hostUnlockedMemory;
+          if (!appData.dates) appData.dates = DEFAULT_DATES;
+          if (!appData.rsvps) appData.rsvps = [];
+          if (!appData.potluck) appData.potluck = [];
+        } else {
+          // Initialize DB with defaults
+          db.ref('friendsgiving_app').set(appData);
         }
-      }
-      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        renderApp();
+      });
     }
 
-    function saveState() {
-      localStorage.setItem('friendsgiving_app_v7', JSON.stringify(appData));
-      renderApp();
+    function syncState() {
+      if (db) {
+        db.ref('friendsgiving_app').set({
+          phase: appData.phase,
+          lockedDate: appData.lockedDate || null,
+          customImage: appData.customImage || null,
+          isBannerBg: appData.isBannerBg || false,
+          presetGraphic: appData.presetGraphic || 'turkey',
+          announcement: appData.announcement || null,
+          dates: appData.dates || [],
+          rsvps: appData.rsvps || [],
+          potluck: appData.potluck || []
+        });
+      } else {
+        renderApp();
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -564,20 +609,20 @@
         text: input,
         date: now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      saveState();
+      syncState();
     }
 
     function clearAnnouncement() {
       appData.announcement = null;
       document.getElementById('announcement-input').value = '';
-      saveState();
+      syncState();
     }
 
-    // HOST AUTHENTICATION LOGIC
+    // HOST AUTHENTICATION
     function handleHostAccessToggle() {
       if (appData.isHostUnlocked) {
         appData.isHostUnlocked = false;
-        saveState();
+        renderApp();
       } else {
         document.getElementById('password-modal').classList.remove('hidden');
         document.getElementById('host-password-input').focus();
@@ -595,7 +640,7 @@
       if (input === appData.hostPassword) {
         appData.isHostUnlocked = true;
         closePasswordModal();
-        saveState();
+        renderApp();
       } else {
         document.getElementById('password-error').classList.remove('hidden');
       }
@@ -625,16 +670,17 @@
     function populateHostDateDropdown() {
       const select = document.getElementById('host-date-select');
       select.innerHTML = '';
-      if (appData.dates.length === 0) {
+      if (!appData.dates || appData.dates.length === 0) {
         const opt = document.createElement('option');
         opt.textContent = "No dates available. Add one below!";
         select.appendChild(opt);
         return;
       }
       appData.dates.forEach(d => {
+        const votes = d.votes || [];
         const opt = document.createElement('option');
         opt.value = d.text;
-        opt.textContent = `${d.text} (${d.votes.length} votes)`;
+        opt.textContent = `${d.text} (${votes.length} votes)`;
         if (appData.lockedDate === d.text) opt.selected = true;
         select.appendChild(opt);
       });
@@ -644,7 +690,7 @@
       const container = document.getElementById('host-dates-manage-list');
       container.innerHTML = '';
 
-      if (appData.dates.length === 0) {
+      if (!appData.dates || appData.dates.length === 0) {
         container.innerHTML = `<p class="text-[11px] text-slate-500 italic">No date options right now.</p>`;
         return;
       }
@@ -664,23 +710,23 @@
 
     function removeCandidateDate(id) {
       appData.dates = appData.dates.filter(d => d.id !== id);
-      saveState();
+      syncState();
     }
 
     function lockSelectedDate() {
       const select = document.getElementById('host-date-select');
-      if (!select.value || appData.dates.length === 0) {
+      if (!select.value || !appData.dates || appData.dates.length === 0) {
         alert("Please add at least one candidate date before locking.");
         return;
       }
       appData.lockedDate = select.value;
       appData.phase = 'rsvp';
-      saveState();
+      syncState();
     }
 
     function unlockDate() {
       appData.phase = 'poll';
-      saveState();
+      syncState();
     }
 
     function addNewCandidateDate(e) {
@@ -689,23 +735,23 @@
       const text = input.value.trim();
       if (!text) return;
       
+      if (!appData.dates) appData.dates = [];
       appData.dates.push({
         id: Date.now(),
         text: text,
         votes: []
       });
       input.value = '';
-      saveState();
+      syncState();
     }
 
-    // CLEAR ALL DATA FUNCTION (HOST ONLY)
     function confirmClearAllData() {
       if (confirm("Are you sure you want to CLEAR ALL VOTES, RSVPs, and POTLUCK DISHES? This action cannot be undone.")) {
-        appData.dates.forEach(d => d.votes = []);
+        if (appData.dates) appData.dates.forEach(d => d.votes = []);
         appData.rsvps = [];
         appData.potluck = [];
         appData.announcement = null;
-        saveState();
+        syncState();
         alert("All entries have been cleared successfully!");
       }
     }
@@ -733,17 +779,20 @@
       const container = document.getElementById('poll-options-container');
       container.innerHTML = '';
 
-      if (appData.dates.length === 0) {
+      if (!appData.dates || appData.dates.length === 0) {
         container.innerHTML = `<div class="text-center py-8 text-slate-500 text-sm">No candidate dates created yet. Host can add dates in Host Controls!</div>`;
         return;
       }
 
       const allVoters = new Set();
-      appData.dates.forEach(d => d.votes.forEach(v => allVoters.add(v)));
+      appData.dates.forEach(d => {
+        if (d.votes) d.votes.forEach(v => allVoters.add(v));
+      });
       const totalVotersCount = allVoters.size || 1;
 
       appData.dates.forEach(item => {
-        const voteCount = item.votes.length;
+        const votes = item.votes || [];
+        const voteCount = votes.length;
         const percent = Math.round((voteCount / totalVotersCount) * 100);
 
         const card = document.createElement('div');
@@ -763,9 +812,9 @@
             <div class="bg-amber-500 h-full transition-all duration-500" style="width: ${percent}%"></div>
           </div>
 
-          ${item.votes.length > 0 ? `
+          ${votes.length > 0 ? `
             <p class="text-[11px] text-slate-400 truncate">
-              <strong class="text-slate-300">Voted:</strong> ${item.votes.join(', ')}
+              <strong class="text-slate-300">Voted:</strong> ${votes.join(', ')}
             </p>
           ` : ''}
         `;
@@ -787,6 +836,7 @@
         const dateObj = appData.dates.find(d => d.id === dateId);
         
         if (dateObj) {
+          if (!dateObj.votes) dateObj.votes = [];
           dateObj.votes = dateObj.votes.filter(v => v.toLowerCase() !== name.toLowerCase());
           if (cb.checked) {
             dateObj.votes.push(name);
@@ -795,7 +845,7 @@
       });
 
       nameInput.value = '';
-      saveState();
+      syncState();
       alert(`Thank you, ${name}! Your availability has been saved.`);
     }
 
@@ -808,6 +858,7 @@
 
       if (!name) return;
 
+      if (!appData.rsvps) appData.rsvps = [];
       const existingIdx = appData.rsvps.findIndex(r => r.name.toLowerCase() === name.toLowerCase());
       const record = { name, status, diet, timestamp: new Date().toISOString() };
 
@@ -819,7 +870,7 @@
 
       document.getElementById('rsvp-name').value = '';
       document.getElementById('rsvp-diet').value = '';
-      saveState();
+      syncState();
       alert(`RSVP saved for ${name}!`);
     }
 
@@ -827,16 +878,17 @@
       const container = document.getElementById('rsvp-attendees-list');
       container.innerHTML = '';
 
-      const attending = appData.rsvps.filter(r => r.status === 'attending');
+      const rsvps = appData.rsvps || [];
+      const attending = rsvps.filter(r => r.status === 'attending');
       document.getElementById('count-attending').textContent = attending.length;
-      document.getElementById('count-total-responses').textContent = `${appData.rsvps.length} responses total`;
+      document.getElementById('count-total-responses').textContent = `${rsvps.length} responses total`;
 
-      if (appData.rsvps.length === 0) {
+      if (rsvps.length === 0) {
         container.innerHTML = `<p class="text-xs text-slate-500 col-span-full">No RSVPs yet. Be the first!</p>`;
         return;
       }
 
-      appData.rsvps.forEach(r => {
+      rsvps.forEach(r => {
         let badgeColor = "bg-emerald-950 text-emerald-300 border-emerald-800";
         let statusText = "Attending";
         if (r.status === 'maybe') { badgeColor = "bg-amber-950 text-amber-300 border-amber-800"; statusText = "Maybe"; }
@@ -868,6 +920,7 @@
 
       if (!bringer || !name) return;
 
+      if (!appData.potluck) appData.potluck = [];
       appData.potluck.push({
         id: Date.now(),
         bringer,
@@ -878,7 +931,7 @@
       document.getElementById('dish-bringer').value = '';
       document.getElementById('dish-name').value = '';
       toggleDishForm();
-      saveState();
+      syncState();
     }
 
     function deleteDish(id) {
@@ -887,17 +940,18 @@
         return;
       }
       appData.potluck = appData.potluck.filter(p => p.id !== id);
-      saveState();
+      syncState();
     }
 
     function renderPotluckBoard() {
       const container = document.getElementById('potluck-categories-grid');
       container.innerHTML = '';
 
+      const potluck = appData.potluck || [];
       const categories = ['Sides', 'Desserts', 'Drinks', 'Appetizers', 'Mains'];
 
       categories.forEach(cat => {
-        const items = appData.potluck.filter(p => p.category === cat);
+        const items = potluck.filter(p => p.category === cat);
 
         const card = document.createElement('div');
         card.className = "p-4 rounded-xl border border-slate-800 bg-slate-950 space-y-2";
@@ -929,7 +983,7 @@
       });
     }
 
-    // ARTWORK & THEME CUSTOMIZATION
+    // ARTWORK & THEME
     function openImageModal() {
       document.getElementById('image-modal').classList.remove('hidden');
     }
@@ -941,8 +995,13 @@
     function selectPresetGraphic(presetKey) {
       appData.presetGraphic = presetKey;
       appData.customImage = null;
-      saveState();
+      syncState();
       closeImageModal();
+    }
+
+    function toggleBannerBackground(e) {
+      appData.isBannerBg = e.target.checked;
+      syncState();
     }
 
     function handleFileUpload(e) {
@@ -952,7 +1011,7 @@
       const reader = new FileReader();
       reader.onload = function(evt) {
         appData.customImage = evt.target.result;
-        saveState();
+        syncState();
         closeImageModal();
       };
       reader.readAsDataURL(file);
@@ -962,14 +1021,24 @@
       const url = document.getElementById('custom-url-input').value.trim();
       if (!url) return;
       appData.customImage = url;
-      saveState();
+      syncState();
       closeImageModal();
     }
 
     function renderArtwork() {
       const display = document.getElementById('artwork-display');
+      const header = document.getElementById('hero-banner');
+      const checkbox = document.getElementById('banner-bg-checkbox');
 
-      if (appData.customImage) {
+      if (checkbox) checkbox.checked = !!appData.isBannerBg;
+
+      if (appData.isBannerBg && appData.customImage) {
+        header.style.backgroundImage = `url('${appData.customImage}')`;
+      } else {
+        header.style.backgroundImage = '';
+      }
+
+      if (appData.customImage && !appData.isBannerBg) {
         display.innerHTML = `<img src="${appData.customImage}" alt="Custom Header Graphic" class="w-full h-full object-cover rounded-xl shadow">`;
         return;
       }
