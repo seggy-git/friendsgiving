@@ -72,7 +72,6 @@
         <div class="flex-shrink-0 flex flex-col items-center">
           <div id="hero-image-container" class="w-48 h-48 sm:w-56 sm:h-56 bg-slate-900/80 border-2 border-amber-500/30 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden relative group backdrop-blur-sm">
             <div id="artwork-display" class="w-full h-full flex items-center justify-center p-2">
-              <!-- SVG Artwork: Drunk Turkey Passed Out on Couch -->
               <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <rect width="200" height="200" fill="#1E1B4B"/>
                 <rect x="20" y="110" width="160" height="60" rx="12" fill="#7C2D12"/>
@@ -107,12 +106,13 @@
               </svg>
             </div>
 
-            <button onclick="openImageModal()" class="absolute inset-0 bg-slate-950/80 text-white font-medium text-xs flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity p-2 text-center">
+            <!-- Host-Only Graphic Customizer Buttons (Hidden in Guest Mode) -->
+            <button id="customize-overlay-btn" onclick="openImageModal()" class="absolute inset-0 bg-slate-950/80 text-white font-medium text-xs flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity p-2 text-center hidden">
               <i class="ph-bold ph-paint-brush text-2xl mb-1 text-amber-400"></i>
               Customize Graphic / Banner
             </button>
           </div>
-          <button onclick="openImageModal()" class="mt-2 text-xs text-amber-400/80 hover:text-amber-300 underline flex items-center gap-1">
+          <button id="customize-link-btn" onclick="openImageModal()" class="mt-2 text-xs text-amber-400/80 hover:text-amber-300 underline items-center gap-1 hidden">
             <i class="ph-bold ph-gear"></i> Change Graphic / Banner
           </button>
         </div>
@@ -479,9 +479,6 @@
 
   <!-- JAVASCRIPT & FIREBASE SYNC LOGIC -->
   <script>
-    // ----------------------------------------------------
-    // STEP 1: Paste Your Free Firebase Config Below
-    // ----------------------------------------------------
     const firebaseConfig = {
       apiKey: "AIzaSyAxrDSYffYYTg_c7Z-xaoNc34o8PAI7lq0",
       authDomain: "friendsgiving-567a9.firebaseapp.com",
@@ -492,7 +489,6 @@
       measurementId: "G-Q6PWE7E5VY"
     };
 
-    // Initialize Firebase
     let db;
     try {
       firebase.initializeApp(firebaseConfig);
@@ -532,7 +528,6 @@
       potluck: []
     };
 
-    // Listen to Firebase database for real-time live updates
     if (db) {
       db.ref('friendsgiving_app').on('value', (snapshot) => {
         const liveData = snapshot.val();
@@ -579,7 +574,6 @@
       renderArtwork();
     }
 
-    // ANNOUNCEMENTS
     function renderAnnouncement() {
       const banner = document.getElementById('announcement-banner');
       const textElem = document.getElementById('announcement-text');
@@ -618,7 +612,6 @@
       syncState();
     }
 
-    // HOST AUTHENTICATION
     function handleHostAccessToggle() {
       if (appData.isHostUnlocked) {
         appData.isHostUnlocked = false;
@@ -651,12 +644,19 @@
       const lockIcon = document.getElementById('host-lock-icon');
       const statusInd = document.getElementById('host-status-indicator');
       const panel = document.getElementById('host-controls-panel');
+      const overlayBtn = document.getElementById('customize-overlay-btn');
+      const linkBtn = document.getElementById('customize-link-btn');
 
       if (appData.isHostUnlocked) {
         btnLabel.textContent = 'Lock Host Controls';
         lockIcon.className = 'ph-bold ph-lock-key-open text-emerald-400';
         statusInd.textContent = 'Host Mode (Unlocked)';
         panel.classList.remove('hidden');
+        if (overlayBtn) overlayBtn.classList.remove('hidden');
+        if (linkBtn) {
+          linkBtn.classList.remove('hidden');
+          linkBtn.classList.add('flex');
+        }
         populateHostDateDropdown();
         renderHostDatesList();
       } else {
@@ -664,6 +664,11 @@
         lockIcon.className = 'ph-bold ph-lock-key';
         statusInd.textContent = 'Guest Mode';
         panel.classList.add('hidden');
+        if (overlayBtn) overlayBtn.classList.add('hidden');
+        if (linkBtn) {
+          linkBtn.classList.add('hidden');
+          linkBtn.classList.remove('flex');
+        }
       }
     }
 
@@ -756,7 +761,6 @@
       }
     }
 
-    // RENDER PHASES
     function renderPhaseView() {
       const pollSection = document.getElementById('phase-poll');
       const rsvpSection = document.getElementById('phase-rsvp');
@@ -774,7 +778,6 @@
       }
     }
 
-    // PHASE 1: POLL LOGIC
     function renderPollOptions() {
       const container = document.getElementById('poll-options-container');
       container.innerHTML = '';
@@ -849,7 +852,6 @@
       alert(`Thank you, ${name}! Your availability has been saved.`);
     }
 
-    // PHASE 2: RSVP LOGIC
     function submitRSVP(e) {
       e.preventDefault();
       const name = document.getElementById('rsvp-name').value.trim();
@@ -907,7 +909,6 @@
       });
     }
 
-    // POTLUCK LOGIC
     function toggleDishForm() {
       document.getElementById('add-dish-form').classList.toggle('hidden');
     }
@@ -983,13 +984,8 @@
       });
     }
 
-    // ARTWORK & THEME (HOST ONLY ACCESS)
     function openImageModal() {
-      if (!appData.isHostUnlocked) {
-        alert("Only the host can customize the graphic or banner theme. Please login as host first!");
-        handleHostAccessToggle();
-        return;
-      }
+      if (!appData.isHostUnlocked) return;
       document.getElementById('image-modal').classList.remove('hidden');
     }
 
