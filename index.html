@@ -1,1066 +1,905 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friendsgiving 6: Whoops I missed one 🦃🛋️</title>
-  <!-- Tailwind CSS CDN -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Friendsgiving 6: Whoops I missed one</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            amber: {
-              50: '#fffbe1',
-              100: '#fef3c7',
-              500: '#f59e0b',
-              800: '#92400e',
-              900: '#78350f',
-              950: '#451a03'
-            },
-            terracotta: {
-              50: '#fdf8f6',
-              100: '#f2e8e5',
-              500: '#c05621',
-              600: '#dd6b20',
-              700: '#9c4221',
-              800: '#7b341e',
-            },
-            forest: {
-              50: '#f2f7f4',
-              700: '#276749',
-              800: '#22543d',
-              900: '#1a4731',
-            },
-            cream: '#fdfbf7',
-            warmgray: '#f5f2eb'
-          },
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-            serif: ['Playfair Display', 'serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #fdfbf7;
-      font-family: 'Outfit', sans-serif;
-      transition: background 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      background-color: #FAF6F0;
+      color: #2D2424;
     }
-    .font-serif-title {
-      font-family: 'Playfair Display', serif;
+    h1, h2, h3, .font-heading {
+      font-family: 'Fredoka', cursive, sans-serif;
     }
     .amber-gradient {
-      background: linear-gradient(135deg, #78350f 0%, #c05621 50%, #276749 100%);
-    }
-    .card-shadow {
-      box-shadow: 0 10px 30px -5px rgba(120, 53, 15, 0.08);
+      background: linear-gradient(135deg, #7C2D12 0%, #C2410C 50%, #EA580C 100%);
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f5f2eb;
+      background: #F3E8FF;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: #CBD5E1;
       border-radius: 4px;
-    }
-    .header-bg-cover {
-      background-size: cover;
-      background-position: center;
     }
   </style>
 </head>
-<body id="app-body" class="text-gray-800 antialiased min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col antialiased bg-[#FAF6F0]" id="app-body">
 
-  <!-- Header Banner -->
-  <div>
-    <header id="header-banner" class="amber-gradient text-white py-10 px-4 sm:px-6 shadow-lg relative overflow-hidden transition-all duration-500">
-      
-      <!-- Overlay filter when custom images are used -->
-      <div id="header-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-all duration-300 hidden"></div>
+  <!-- Header / Hero Section -->
+  <header id="hero-banner" class="amber-gradient text-white relative shadow-xl overflow-hidden transition-all duration-300">
+    <!-- Overlay for background custom styles -->
+    <div id="banner-overlay" class="absolute inset-0 bg-black/30 backdrop-blur-[1px]"></div>
 
-      <!-- Floating Customize Controls Button -->
-      <div class="absolute top-4 right-4 z-20 flex gap-2">
-        <button onclick="toggleThemeModal(true)" class="px-3.5 py-2 bg-black/30 hover:bg-black/50 text-white backdrop-blur-md rounded-xl text-xs font-semibold border border-white/20 transition flex items-center gap-1.5 shadow-md">
-          <i class="ph-bold ph-palette text-amber-300 text-sm"></i>
-          <span>Change Image / Theme</span>
-        </button>
-        <button onclick="toggleHostGuide(true)" class="px-3 py-2 bg-black/30 hover:bg-black/50 text-white backdrop-blur-md rounded-xl text-xs font-semibold border border-white/20 transition flex items-center gap-1.5 shadow-md" title="How to host guide">
-          <i class="ph-bold ph-question text-sm"></i>
-        </button>
-      </div>
-
-      <!-- Decorative background fallback icons -->
-      <div id="default-header-bg-decor" class="pointer-events-none">
-        <div class="absolute -right-6 -bottom-6 text-white/10 text-9xl pointer-events-none">
-          <i class="ph-fill ph-leaf"></i>
-        </div>
-        <div class="absolute -left-6 -top-6 text-white/10 text-8xl pointer-events-none">
-          <i class="ph-fill ph-sparkle"></i>
-        </div>
-      </div>
-
-      <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         
-        <!-- Hero Header -->
-        <div class="text-center mb-6 md:mb-0 max-w-3xl mx-auto">
-            <span class="inline-block px-3 py-1 bg-amber-900/40 border border-amber-600/40 text-amber-300 rounded-full text-xs font-semibold uppercase tracking-wider mb-3 backdrop-blur-sm">
-                Annual Feast & Celebration
-            </span>
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-amber-100 tracking-tight mb-4 drop-shadow-md">
-                Friendsgiving 6: Whoops I missed one
-            </h1>
-            <div class="space-y-4 text-amber-200/90 text-base sm:text-lg leading-relaxed text-left sm:text-center max-w-2xl mx-auto bg-amber-950/40 backdrop-blur-md p-5 rounded-2xl border border-amber-800/40 shadow-inner">
-                <p>
-                    The sixth annual Friendsgiving celebration at our home, a time for us get together and be thankful for all that is good - Beer, Food, and Friends, in no particular order.
-                </p>
-                <p>
-                    Same as every year, I will be preparing a turkey. Feel free to bring any dish you want but don't feel obligated. We'll just silently judge you if you come empty handed and at some point tell you to get the fuck out.
-                </p>
-                <p>
-                    As always, there will be plenty of beer and booze, and we can sleep, like, 6-8 people now so if you need to crash that is cool too.
-                </p>
-            </div>
-
-            <!-- Phase Navigation Indicator -->
-            <div class="mt-6 inline-flex p-1 bg-black/30 backdrop-blur-md rounded-2xl border border-white/20 text-sm">
-              <button id="nav-poll-btn" onclick="switchPhase('poll')" class="px-5 py-2 rounded-xl font-medium transition-all duration-200 flex items-center gap-2">
-                <i class="ph-bold ph-chart-bar"></i> 1. Date Poll
-              </button>
-              <button id="nav-rsvp-btn" onclick="switchPhase('rsvp')" class="px-5 py-2 rounded-xl font-medium transition-all duration-200 flex items-center gap-2">
-                <i class="ph-bold ph-check-circle"></i> 2. RSVP & Potluck
-              </button>
-            </div>
-        </div>
-
-        <!-- Featured Header Artwork Container -->
-        <div id="artwork-card-wrapper" class="w-56 h-44 sm:w-64 sm:h-48 bg-amber-950/40 border border-white/20 backdrop-blur-md rounded-3xl p-3 flex items-center justify-center shadow-2xl relative shrink-0 overflow-hidden group">
+        <!-- Text Content -->
+        <div class="flex-1 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 bg-amber-500/30 backdrop-blur-md border border-amber-300/30 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase mb-3 text-amber-200">
+            <i class="ph-bold ph-turkey text-lg"></i>
+            6th Annual Celebration
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4 text-amber-50 drop-shadow-md">
+            Friendsgiving 6: Whoops I missed one
+          </h1>
           
-          <!-- Quick Change Hover Overlay -->
-          <button onclick="toggleThemeModal(true)" class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs font-semibold gap-1 z-30">
-            <i class="ph-bold ph-image-square text-2xl"></i>
-            <span>Change Artwork</span>
-          </button>
-
-          <!-- Dynamic Container for SVG, Image, or Custom Graphic -->
-          <div id="artwork-display-area" class="w-full h-full flex items-center justify-center">
-            <!-- Rendered dynamically by JS -->
+          <div class="space-y-3 text-amber-100 text-sm sm:text-base leading-relaxed bg-black/20 backdrop-blur-sm p-4 rounded-xl border border-white/10">
+            <p>
+              The sixth annual Friendsgiving celebration at our home, a time for us get together and be thankful for all that is good - Beer, Food, and Friends, in no particular order.
+            </p>
+            <p>
+              Same as every year, I will be preparing a turkey. Feel free to bring any dish you want but don't feel obligated. We'll just silently judge you if you come empty handed and at some point tell you to get the fuck out.
+            </p>
+            <p>
+              As always, there will be plenty of beer and booze, and we can sleep, like, 6-8 people now so if you need to crash that is cool too.
+            </p>
           </div>
         </div>
 
-      </div>
-    </header>
+        <!-- Custom Graphic Box -->
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div id="hero-image-container" class="w-48 h-48 sm:w-56 sm:h-56 bg-amber-900/40 border-2 border-amber-300/30 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden relative group">
+            <!-- Artwork dynamic display -->
+            <div id="artwork-display" class="w-full h-full flex items-center justify-center p-2">
+              <!-- Default SVG Artwork: Drunk Turkey Passed Out on Couch -->
+              <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background Wall -->
+                <rect width="200" height="200" fill="#78350F"/>
+                <!-- Couch Base -->
+                <rect x="20" y="110" width="160" height="60" rx="12" fill="#9A3412"/>
+                <rect x="15" y="90" width="25" height="70" rx="8" fill="#7C2D12"/>
+                <rect x="160" y="90" width="25" height="70" rx="8" fill="#7C2D12"/>
+                <!-- Couch Cushions -->
+                <rect x="35" y="115" width="60" height="35" rx="6" fill="#C2410C"/>
+                <rect x="100" y="115" width="60" height="35" rx="6" fill="#C2410C"/>
+                <!-- Passed out Turkey Body lying down -->
+                <!-- Tail Feathers drooping -->
+                <path d="M 30 110 Q 15 100 20 85 Q 35 95 40 110 Z" fill="#D97706"/>
+                <path d="M 35 105 Q 25 85 35 75 Q 45 90 45 105 Z" fill="#B45309"/>
+                <path d="M 42 105 Q 40 80 52 75 Q 55 90 50 105 Z" fill="#92400E"/>
+                <!-- Turkey Torso back on couch -->
+                <ellipse cx="90" cy="120" rx="35" ry="20" fill="#B45309"/>
+                <!-- Turkey Wing slumped over edge -->
+                <path d="M 80 120 C 70 135 60 145 65 150 C 75 152 85 135 90 125 Z" fill="#78350F"/>
+                <!-- Turkey Neck & Head sideways -->
+                <path d="M 120 120 Q 145 125 150 135" stroke="#D97706" stroke-width="12" stroke-linecap="round"/>
+                <!-- Head -->
+                <circle cx="152" cy="136" r="10" fill="#D97706"/>
+                <!-- Snood/Wattle drooped -->
+                <path d="M 152 136 Q 155 148 150 152" stroke="#DC2626" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <!-- Beak open sleeping -->
+                <polygon points="158,134 168,137 158,142" fill="#F59E0B"/>
+                <!-- Sleeping Eyes (X_X or Zzz) -->
+                <path d="M 148 132 L 154 138 M 154 132 L 148 138" stroke="#451A03" stroke-width="2"/>
+                <!-- Beer Bottles on floor and couch -->
+                <!-- Empty bottle on floor tipped over -->
+                <g transform="translate(110, 168) rotate(75)">
+                  <rect x="0" y="0" width="8" height="18" fill="#047857" rx="2"/>
+                  <rect x="2" y="-6" width="4" height="7" fill="#047857"/>
+                  <rect x="1" y="4" width="6" height="8" fill="#FEF08A"/>
+                </g>
+                <!-- Spill puddle -->
+                <ellipse cx="135" cy="173" rx="12" ry="3" fill="#F59E0B" opacity="0.6"/>
+                <!-- Bottle resting in turkey wing -->
+                <g transform="translate(70, 128) rotate(-20)">
+                  <rect x="0" y="0" width="7" height="16" fill="#047857" rx="2"/>
+                  <rect x="2" y="-5" width="3" height="6" fill="#047857"/>
+                  <rect x="1" y="3" width="5" height="7" fill="#FEF08A"/>
+                </g>
+                <!-- Zzz Floating -->
+                <text x="160" y="115" fill="#FEF3C7" font-family="sans-serif" font-weight="bold" font-size="14">Z</text>
+                <text x="170" y="102" fill="#FEF3C7" font-family="sans-serif" font-weight="bold" font-size="11">z</text>
+                <text x="178" y="92" fill="#FEF3C7" font-family="sans-serif" font-weight="bold" font-size="9">z</text>
+              </svg>
+            </div>
 
-    <!-- Theme & Background Selector Modal -->
-    <div id="theme-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-      <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-5 shadow-2xl relative border border-amber-900/10 max-h-[90vh] overflow-y-auto custom-scrollbar">
-        <button onclick="toggleThemeModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1">
-          <i class="ph-bold ph-x text-xl"></i>
-        </button>
-
-        <div class="flex items-center gap-3 text-amber-900 border-b border-gray-100 pb-3">
-          <div class="p-2.5 bg-amber-100 rounded-2xl text-amber-800">
-            <i class="ph-fill ph-palette text-2xl"></i>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold font-serif-title">Header Image & Theme Settings</h3>
-            <p class="text-xs text-gray-500">Customize artwork or upload your own image</p>
-          </div>
-        </div>
-
-        <!-- Preset Artwork Switcher -->
-        <div class="space-y-2">
-          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Select Preset Artwork</label>
-          <div class="grid grid-cols-2 gap-2">
-            
-            <button onclick="setPresetTheme('turkey_couch')" class="p-2.5 rounded-2xl border text-left flex items-center gap-2 hover:border-amber-500 transition text-xs font-semibold text-gray-800 bg-amber-50/50 border-amber-200">
-              <span class="text-lg">🛋️</span>
-              <div>
-                <p>Drunk Turkey</p>
-                <p class="text-[10px] text-gray-400 font-normal">Original Passed Out SVG</p>
-              </div>
+            <!-- Customization Button on Image Hover -->
+            <button onclick="openImageModal()" class="absolute inset-0 bg-black/60 text-white font-medium text-xs flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity p-2 text-center">
+              <i class="ph-bold ph-paint-brush text-2xl mb-1 text-amber-400"></i>
+              Customize Artwork & Theme
             </button>
-
-            <button onclick="setPresetTheme('autumn_feast')" class="p-2.5 rounded-2xl border text-left flex items-center gap-2 hover:border-amber-500 transition text-xs font-semibold text-gray-800 bg-amber-50/50 border-gray-200">
-              <span class="text-lg">🦃</span>
-              <div>
-                <p>Autumn Feast</p>
-                <p class="text-[10px] text-gray-400 font-normal">Harvest Table Photo</p>
-              </div>
-            </button>
-
-            <button onclick="setPresetTheme('beer_cheers')" class="p-2.5 rounded-2xl border text-left flex items-center gap-2 hover:border-amber-500 transition text-xs font-semibold text-gray-800 bg-amber-50/50 border-gray-200">
-              <span class="text-lg">🍺</span>
-              <div>
-                <p>Beer & Friends</p>
-                <p class="text-[10px] text-gray-400 font-normal">Cheers Drinks Theme</p>
-              </div>
-            </button>
-
-            <button onclick="setPresetTheme('cozy_fireplace')" class="p-2.5 rounded-2xl border text-left flex items-center gap-2 hover:border-amber-500 transition text-xs font-semibold text-gray-800 bg-amber-50/50 border-gray-200">
-              <span class="text-lg">🔥</span>
-              <div>
-                <p>Cozy Fireplace</p>
-                <p class="text-[10px] text-gray-400 font-normal">Warm Fire Glow</p>
-              </div>
-            </button>
-
           </div>
-        </div>
-
-        <hr class="border-gray-100">
-
-        <!-- Upload Custom Image File -->
-        <div class="space-y-2">
-          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Option A: Upload Custom Image File</label>
-          <div class="flex items-center gap-2">
-            <input type="file" id="image-file-input" accept="image/*" onchange="handleFileUpload(event)" class="hidden">
-            <label for="image-file-input" class="w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs border border-gray-300 transition text-center cursor-pointer flex items-center justify-center gap-2">
-              <i class="ph-bold ph-upload-simple"></i> Choose Image from Computer
-            </label>
-          </div>
-          <p class="text-[11px] text-gray-400">Uploads are saved directly to your local web browser session.</p>
-        </div>
-
-        <!-- Custom Image Web URL -->
-        <div class="space-y-2">
-          <label for="custom-url-input" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Option B: Use Custom Image URL</label>
-          <div class="flex gap-2">
-            <input type="url" id="custom-url-input" placeholder="https://images.unsplash.com/photo..." class="flex-1 px-3 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none">
-            <button onclick="handleUrlSubmit()" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white text-xs font-semibold rounded-xl transition">Apply URL</button>
-          </div>
-        </div>
-
-        <!-- Banner Placement Target toggle -->
-        <div class="space-y-2 pt-2 border-t border-gray-100">
-          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Image Placement Target</label>
-          <div class="grid grid-cols-2 gap-2">
-            <label class="cursor-pointer">
-              <input type="radio" name="image-target" value="card" onchange="setImageTarget('card')" class="peer sr-only">
-              <div class="p-2.5 text-center text-xs font-semibold rounded-xl border border-gray-200 peer-checked:bg-amber-100 peer-checked:border-amber-600 peer-checked:text-amber-900 transition">
-                🖼️ Corner Artwork Badge
-              </div>
-            </label>
-            <label class="cursor-pointer">
-              <input type="radio" name="image-target" value="banner" onchange="setImageTarget('banner')" class="peer sr-only">
-              <div class="p-2.5 text-center text-xs font-semibold rounded-xl border border-gray-200 peer-checked:bg-amber-100 peer-checked:border-amber-600 peer-checked:text-amber-900 transition">
-                🏞️ Full Banner Background
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="pt-2">
-          <button onclick="toggleThemeModal(false)" class="w-full py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-semibold rounded-xl text-xs transition">
-            Close Settings
+          <button onclick="openImageModal()" class="mt-2 text-xs text-amber-200 hover:text-white underline flex items-center gap-1">
+            <i class="ph-bold ph-gear"></i> Change Graphic / Theme
           </button>
         </div>
 
       </div>
     </div>
+  </header>
 
-    <!-- Host Guide Modal -->
-    <div id="host-guide-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-      <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative border border-amber-900/10 max-h-[90vh] overflow-y-auto custom-scrollbar">
-        <button onclick="toggleHostGuide(false)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1">
-          <i class="ph-bold ph-x text-xl"></i>
+  <!-- Control Bar for Host Password & Reset -->
+  <div class="bg-amber-950 text-amber-200 text-xs py-2 px-4 border-b border-amber-800">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="host-status-indicator" class="font-medium">Guest Mode</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="handleHostAccessToggle()" id="host-auth-btn" class="hover:text-white flex items-center gap-1 bg-amber-900/60 hover:bg-amber-800 px-2.5 py-1 rounded border border-amber-700/50">
+          <i class="ph-bold ph-lock-key" id="host-lock-icon"></i>
+          <span id="host-btn-label">Host Login</span>
         </button>
-
-        <div class="flex items-center gap-3 text-amber-900 border-b border-gray-100 pb-3">
-          <div class="p-2.5 bg-amber-100 rounded-2xl text-amber-800">
-            <i class="ph-fill ph-house-line text-2xl"></i>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold font-serif-title">How to Host This App</h3>
-            <p class="text-xs text-gray-500">Quick guide to deploying and sharing with friends</p>
-          </div>
-        </div>
-
-        <div class="space-y-4 text-sm text-gray-600">
-          <div class="space-y-1">
-            <h4 class="font-bold text-gray-800 flex items-center gap-1.5">
-              <span class="w-5 h-5 rounded-full bg-terracotta-500 text-white text-xs flex items-center justify-center">1</span> 
-              Free Hosting Options
-            </h4>
-            <p class="text-xs text-gray-500 pl-6">
-              Because this app is contained in a single <code>index.html</code> file, you can host it for free in under 2 minutes:
-            </p>
-            <ul class="list-disc pl-11 text-xs text-gray-600 space-y-1 mt-1">
-              <li><strong>Netlify Drop:</strong> Drag & drop the file into <a href="https://app.netlify.com/drop" target="_blank" class="text-terracotta-600 underline">Netlify Drop</a>.</li>
-              <li><strong>GitHub Pages:</strong> Push to a GitHub repository and turn on Pages in settings.</li>
-              <li><strong>Vercel / Render:</strong> Import as a static HTML project.</li>
-            </ul>
-          </div>
-
-          <div class="space-y-1">
-            <h4 class="font-bold text-gray-800 flex items-center gap-1.5">
-              <span class="w-5 h-5 rounded-full bg-terracotta-500 text-white text-xs flex items-center justify-center">2</span> 
-              How Data Storage Works
-            </h4>
-            <p class="text-xs text-gray-500 pl-6">
-              This app automatically saves state to the user's local browser memory (<code>localStorage</code>).
-            </p>
-          </div>
-        </div>
-
-        <div class="pt-2">
-          <button onclick="toggleHostGuide(false)" class="w-full py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-semibold rounded-xl text-xs transition">
-            Got it, let's party! 🦃
-          </button>
-        </div>
       </div>
     </div>
-
-    <!-- Main Container -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-      
-      <!-- Announcement / Mode Banner -->
-      <div id="status-banner" class="mb-8 p-4 rounded-2xl border transition-all duration-300">
-        <!-- Dynamic Status Inserted Here via JS -->
-      </div>
-
-      <!-- ================= PHASE 1: DATE POLL MODE ================= -->
-      <section id="phase-poll" class="space-y-8">
-        
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-          
-          <!-- Submit Vote Card -->
-          <div class="md:col-span-5 space-y-6">
-            <div class="bg-white p-6 rounded-3xl border border-amber-900/10 card-shadow">
-              <h2 class="text-xl font-bold text-amber-900 font-serif-title mb-1 flex items-center gap-2">
-                <i class="ph-fill ph-vote text-terracotta-500"></i> Cast Your Vote
-              </h2>
-              <p class="text-sm text-gray-500 mb-4">Select all candidate dates that work for you.</p>
-
-              <form id="vote-form" onsubmit="handleVoteSubmit(event)" class="space-y-4">
-                <div>
-                  <label for="voter-name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Your Name</label>
-                  <input type="text" id="voter-name" required placeholder="e.g. Alex Rivera" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-terracotta-500 focus:border-terracotta-500 outline-none transition text-sm">
-                </div>
-
-                <div>
-                  <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Available Dates</label>
-                  <div id="candidate-dates-list" class="space-y-2 max-h-56 overflow-y-auto pr-1 custom-scrollbar">
-                    <!-- Dynamic checkboxes inserted here -->
-                  </div>
-                </div>
-
-                <button type="submit" class="w-full py-3.5 px-4 bg-terracotta-600 hover:bg-terracotta-700 text-white font-semibold rounded-xl shadow-md shadow-terracotta-600/20 transition duration-200 flex items-center justify-center gap-2">
-                  <i class="ph-bold ph-check"></i> Submit Availability
-                </button>
-              </form>
-            </div>
-
-            <!-- Host Actions Panel (Add Date & Finalize) -->
-            <div class="bg-warmgray p-6 rounded-3xl border border-amber-900/10">
-              <h3 class="text-sm font-bold text-amber-900 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <i class="ph-bold ph-gear-six"></i> Host Controls
-              </h3>
-              
-              <div class="space-y-4">
-                <div>
-                  <label for="new-date-input" class="block text-xs font-medium text-gray-600 mb-1">Add Candidate Date</label>
-                  <div class="flex gap-2">
-                    <input type="text" id="new-date-input" placeholder="e.g. Fri, Nov 20" class="flex-1 px-3 py-2 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none">
-                    <button onclick="addCandidateDate()" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white text-sm font-medium rounded-xl transition">Add</button>
-                  </div>
-                </div>
-
-                <hr class="border-amber-900/10">
-
-                <div>
-                  <label for="finalize-date-select" class="block text-xs font-medium text-gray-600 mb-1">Lock in Winning Date</label>
-                  <div class="flex gap-2">
-                    <select id="finalize-date-select" class="flex-1 px-3 py-2 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest-700 outline-none bg-white">
-                      <!-- Date options -->
-                    </select>
-                    <button onclick="finalizeDate()" class="px-4 py-2 bg-forest-700 hover:bg-forest-800 text-white text-sm font-medium rounded-xl transition flex items-center gap-1">
-                      <i class="ph-bold ph-lock-key"></i> Lock Date
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Poll Results Display -->
-          <div class="md:col-span-7 bg-white p-6 rounded-3xl border border-amber-900/10 card-shadow">
-            <div class="flex items-center justify-between mb-6">
-              <div>
-                <h2 class="text-xl font-bold text-amber-900 font-serif-title">Live Poll Results</h2>
-                <p class="text-sm text-gray-500" id="total-voters-count">0 participants have voted</p>
-              </div>
-              <span class="p-2 bg-amber-50 text-amber-800 rounded-xl text-xs font-semibold flex items-center gap-1 border border-amber-200">
-                <i class="ph-bold ph-chart-pie"></i> Real-time Tally
-              </span>
-            </div>
-
-            <!-- Visual Bar Chart -->
-            <div id="poll-results-container" class="space-y-5">
-              <!-- Rendered via JS -->
-            </div>
-
-            <!-- List of voters per date -->
-            <div class="mt-8 pt-6 border-t border-gray-100">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Voter Breakdown</h3>
-              <div id="voter-breakdown-list" class="space-y-3 max-h-48 overflow-y-auto custom-scrollbar">
-                <!-- Breakdown inserted via JS -->
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- ================= PHASE 2: RSVP & POTLUCK MODE ================= -->
-      <section id="phase-rsvp" class="space-y-8 hidden">
-        
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-          
-          <!-- RSVP & Potluck Entry Form -->
-          <div class="md:col-span-5 space-y-6">
-            <div class="bg-white p-6 rounded-3xl border border-amber-900/10 card-shadow">
-              <h2 class="text-xl font-bold text-amber-900 font-serif-title mb-1 flex items-center gap-2">
-                <i class="ph-fill ph-check-square-offset text-forest-700"></i> RSVP & Potluck Form
-              </h2>
-              <p class="text-sm text-gray-500 mb-4">Let us know if you can make it and what you're bringing!</p>
-
-              <form id="rsvp-form" onsubmit="handleRsvpSubmit(event)" class="space-y-4">
-                <div>
-                  <label for="rsvp-name" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Your Name</label>
-                  <input type="text" id="rsvp-name" required placeholder="e.g. Jordan Lee" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-forest-700 outline-none transition text-sm">
-                </div>
-
-                <div>
-                  <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Attendance Status</label>
-                  <div class="grid grid-cols-3 gap-2">
-                    <label class="cursor-pointer">
-                      <input type="radio" name="attendance" value="Attending" checked class="peer sr-only">
-                      <div class="p-2 text-center text-xs font-semibold rounded-xl border border-gray-200 peer-checked:bg-forest-50 peer-checked:border-forest-700 peer-checked:text-forest-800 transition">
-                        🎉 Yes!
-                      </div>
-                    </label>
-                    <label class="cursor-pointer">
-                      <input type="radio" name="attendance" value="Maybe" class="peer sr-only">
-                      <div class="p-2 text-center text-xs font-semibold rounded-xl border border-gray-200 peer-checked:bg-amber-50 peer-checked:border-amber-600 peer-checked:text-amber-800 transition">
-                        🤔 Maybe
-                      </div>
-                    </label>
-                    <label class="cursor-pointer">
-                      <input type="radio" name="attendance" value="Declined" class="peer sr-only">
-                      <div class="p-2 text-center text-xs font-semibold rounded-xl border border-gray-200 peer-checked:bg-red-50 peer-checked:border-red-500 peer-checked:text-red-800 transition">
-                        😢 Can't
-                      </div>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label for="dietary-notes" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Dietary Restrictions / Allergies</label>
-                  <input type="text" id="dietary-notes" placeholder="e.g. Vegetarian, Nut Allergy, Gluten-Free" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-forest-700 outline-none transition text-sm">
-                </div>
-
-                <hr class="border-gray-100 my-2">
-
-                <div>
-                  <h3 class="text-xs font-bold uppercase tracking-wider text-terracotta-700 mb-2 flex items-center gap-1">
-                    <i class="ph-bold ph-cooking-pot"></i> What Dish or Drink are you bringing?
-                  </h3>
-                  
-                  <div class="space-y-3">
-                    <div>
-                      <label for="dish-category" class="block text-xs text-gray-500 mb-1">Category</label>
-                      <select id="dish-category" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-forest-700 outline-none bg-white text-sm">
-                        <option value="Main Dish">🦃 Main Dish (Turkey, Ham, Roast)</option>
-                        <option value="Side Dish">🥔 Side Dish (Stuffing, Potatoes, Gravy)</option>
-                        <option value="Appetizer">🧀 Appetizer (Charcuterie, Dips)</option>
-                        <option value="Dessert">🥧 Dessert (Pies, Cakes)</option>
-                        <option value="Beverages">🍷 Beverages (Wine, Cider, Cocktails)</option>
-                        <option value="Supplies">🍽️ Supplies (Plates, Napkins, Ice)</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label for="dish-name" class="block text-xs text-gray-500 mb-1">Dish / Item Name</label>
-                      <input type="text" id="dish-name" placeholder="e.g. Garlic Mashed Potatoes" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-forest-700 outline-none transition text-sm">
-                    </div>
-                  </div>
-                </div>
-
-                <button type="submit" class="w-full py-3.5 px-4 bg-forest-800 hover:bg-forest-900 text-white font-semibold rounded-xl shadow-md shadow-forest-900/20 transition duration-200 flex items-center justify-center gap-2">
-                  <i class="ph-bold ph-paper-plane-tilt"></i> Save RSVP & Dish
-                </button>
-              </form>
-            </div>
-
-            <!-- Host Reset Control -->
-            <div class="bg-warmgray p-4 rounded-2xl border border-amber-900/10 flex items-center justify-between text-xs text-gray-600">
-              <span>Need to change the date again?</span>
-              <button onclick="reopenPoll()" class="text-terracotta-700 hover:underline font-semibold flex items-center gap-1">
-                <i class="ph-bold ph-arrow-counter-clockwise"></i> Re-open Date Poll
-              </button>
-            </div>
-          </div>
-
-          <!-- Potluck Board & Guest List -->
-          <div class="md:col-span-7 space-y-6">
-            
-            <!-- Guest List Summary -->
-            <div class="bg-white p-6 rounded-3xl border border-amber-900/10 card-shadow">
-              <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-bold text-amber-900 font-serif-title flex items-center gap-2">
-                  <i class="ph-fill ph-users text-amber-800"></i> Guest Status
-                </h2>
-                <div class="flex gap-2 text-xs font-semibold">
-                  <span id="badge-attending" class="px-2.5 py-1 bg-forest-50 text-forest-800 rounded-lg border border-forest-200">0 Attending</span>
-                  <span id="badge-maybe" class="px-2.5 py-1 bg-amber-50 text-amber-800 rounded-lg border border-amber-200">0 Maybe</span>
-                </div>
-              </div>
-
-              <!-- Guest Pills -->
-              <div id="guest-pills-list" class="flex flex-wrap gap-2">
-                <!-- Dynamic Guest Badges -->
-              </div>
-            </div>
-
-            <!-- Categorized Potluck Board -->
-            <div class="bg-white p-6 rounded-3xl border border-amber-900/10 card-shadow">
-              <div class="flex items-center justify-between mb-6">
-                <div>
-                  <h2 class="text-xl font-bold text-amber-900 font-serif-title">Potluck Menu Board</h2>
-                  <p class="text-sm text-gray-500">See what everyone is bringing to avoid duplicates!</p>
-                </div>
-                <i class="ph-fill ph-fork-knife text-2xl text-terracotta-500"></i>
-              </div>
-
-              <div id="potluck-categories-grid" class="space-y-6">
-                <!-- Rendered Category Cards via JS -->
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
   </div>
 
+  <!-- Main Container -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 space-y-8">
+
+    <!-- HOST CONTROLS DRAWER (PASSWORD PROTECTED) -->
+    <section id="host-controls-panel" class="hidden bg-amber-900/10 border-2 border-amber-600/40 rounded-2xl p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-amber-200/60">
+        <div class="flex items-center gap-2 text-amber-900">
+          <i class="ph-bold ph-shield-check text-2xl text-amber-700"></i>
+          <h2 class="text-xl font-bold font-heading">Host Controls</h2>
+        </div>
+        <span class="bg-amber-200 text-amber-900 text-xs px-2.5 py-1 rounded-full font-bold">Unlocked</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Date Locking State -->
+        <div class="bg-white p-4 rounded-xl border border-amber-100 shadow-sm space-y-3">
+          <h3 class="font-semibold text-sm text-gray-800 flex items-center gap-2">
+            <i class="ph-bold ph-calendar-check text-amber-600"></i> Event Phase & Date Lock
+          </h3>
+          <p class="text-xs text-gray-600">
+            Lock in a date to end the poll and open RSVPs & Potluck list.
+          </p>
+          
+          <div class="space-y-2">
+            <label class="block text-xs font-medium text-gray-700">Select Final Date:</label>
+            <select id="host-date-select" class="w-full text-xs p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-amber-500">
+              <!-- Options populated dynamically -->
+            </select>
+          </div>
+
+          <div class="flex gap-2 pt-2">
+            <button onclick="lockSelectedDate()" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors">
+              Confirm & Lock Date
+            </button>
+            <button onclick="unlockDate()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold py-2 px-3 rounded-lg border">
+              Re-open Poll
+            </button>
+          </div>
+        </div>
+
+        <!-- Add Dates / Clear All Data -->
+        <div class="bg-white p-4 rounded-xl border border-amber-100 shadow-sm space-y-3">
+          <h3 class="font-semibold text-sm text-gray-800 flex items-center gap-2">
+            <i class="ph-bold ph-wrench text-amber-600"></i> Manage Poll & Data
+          </h3>
+          
+          <!-- Add new candidate date -->
+          <form onsubmit="addNewCandidateDate(event)" class="flex gap-2">
+            <input type="text" id="new-date-input" placeholder="e.g. Saturday, Nov 21 @ 4 PM" required class="flex-1 text-xs p-2 border rounded-lg focus:ring-2 focus:ring-amber-500">
+            <button type="submit" class="bg-amber-800 hover:bg-amber-900 text-white text-xs px-3 py-2 rounded-lg font-medium">
+              + Add
+            </button>
+          </form>
+
+          <hr class="border-gray-100 my-2">
+
+          <!-- CLEAR ALL DATA BUTTON -->
+          <div class="pt-1">
+            <button onclick="confirmClearAllData()" class="w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+              <i class="ph-bold ph-trash text-sm"></i>
+              Clear All Entries & Reset App Data
+            </button>
+            <p class="text-[10px] text-red-500/80 text-center mt-1">Clears all votes, RSVPs, and potluck items permanently.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHASE 1: DATE POLL SECTION -->
+    <section id="phase-poll" class="bg-white rounded-2xl p-6 shadow-sm border border-amber-900/10 space-y-6">
+      <div class="border-b border-gray-100 pb-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold font-heading text-amber-950 flex items-center gap-2">
+            <i class="ph-bold ph-vote text-amber-600"></i> Phase 1: Vote for the Date
+          </h2>
+          <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-medium">Poll Active</span>
+        </div>
+        <p class="text-sm text-gray-600 mt-1">Select all dates that work for you. We will lock in the winner soon!</p>
+      </div>
+
+      <!-- Date Options List -->
+      <div id="poll-options-container" class="space-y-4">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Submit / Record Vote Form -->
+      <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-200/60 space-y-3">
+        <h3 class="text-sm font-semibold text-amber-900">Cast Your Vote</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <input type="text" id="voter-name" placeholder="Your Name" class="text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+          <button onclick="submitPollVote()" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm py-2.5 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
+            <i class="ph-bold ph-check-circle"></i> Save My Availability
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PHASE 2: CONFIRMED RSVP & POTLUCK SECTION -->
+    <section id="phase-rsvp" class="hidden space-y-8">
+      
+      <!-- Date Confirmed Banner -->
+      <div class="bg-emerald-800 text-white rounded-2xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="space-y-1 text-center sm:text-left">
+          <span class="text-xs uppercase font-bold tracking-widest text-emerald-200">Official Date Locked In!</span>
+          <h2 class="text-2xl sm:text-3xl font-bold font-heading" id="locked-date-display">
+            Saturday, November 21
+          </h2>
+        </div>
+        <div class="bg-emerald-900/80 border border-emerald-400/30 px-4 py-2 rounded-xl text-center">
+          <span class="block text-xs text-emerald-200">Location</span>
+          <span class="font-semibold text-sm">Our House 🏡</span>
+        </div>
+      </div>
+
+      <!-- RSVP Form Card -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-amber-900/10 space-y-6">
+        <h2 class="text-xl font-bold font-heading text-amber-950 flex items-center gap-2 border-b pb-3">
+          <i class="ph-bold ph-envelope-open text-amber-600"></i> RSVP & Guest Registration
+        </h2>
+
+        <form onsubmit="submitRSVP(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Your Name *</label>
+              <input type="text" id="rsvp-name" required placeholder="Full Name" class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Can you make it? *</label>
+              <select id="rsvp-status" required class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500">
+                <option value="attending">Hell Yeah, I'll be there! 🦃</option>
+                <option value="maybe">Maybe / TBD 🤔</option>
+                <option value="declined">Can't make it 😢</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">Dietary Restrictions / Notes</label>
+            <input type="text" id="rsvp-diet" placeholder="e.g. Vegetarian, Nut Allergy, Staying over on couch" class="w-full text-sm p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500">
+          </div>
+
+          <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2">
+            <i class="ph-bold ph-paper-plane-tilt text-lg"></i> Submit RSVP
+          </button>
+        </form>
+      </div>
+
+      <!-- Attendance List Summary -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-amber-900/10 space-y-4">
+        <h3 class="text-lg font-bold font-heading text-amber-950 flex items-center justify-between">
+          <span>Who's Coming (<span id="count-attending">0</span>)</span>
+          <span class="text-xs font-normal text-gray-500" id="count-total-responses">0 responses total</span>
+        </h3>
+
+        <div id="rsvp-attendees-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- POTLUCK DISH BOARD -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-amber-900/10 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3">
+          <div>
+            <h2 class="text-xl font-bold font-heading text-amber-950 flex items-center gap-2">
+              <i class="ph-bold ph-cooking-pot text-amber-600"></i> Potluck & Drink Signup
+            </h2>
+            <p class="text-xs text-gray-500">Host is providing Turkey + Main Beer. Add what you are bringing!</p>
+          </div>
+          <button onclick="toggleDishForm()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold py-2 px-3 rounded-lg flex items-center gap-1 self-start sm:self-auto">
+            <i class="ph-bold ph-plus"></i> Add Item
+          </button>
+        </div>
+
+        <!-- Add Dish Form (Hidden by default) -->
+        <form id="add-dish-form" onsubmit="submitDish(event)" class="hidden bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Your Name</label>
+              <input type="text" id="dish-bringer" required placeholder="Name" class="w-full text-xs p-2 border rounded-md">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">Item Category</label>
+              <select id="dish-category" class="w-full text-xs p-2 border rounded-md">
+                <option value="Sides">Side Dish</option>
+                <option value="Desserts">Dessert</option>
+                <option value="Drinks">Booze & Drinks</option>
+                <option value="Appetizers">Appetizer</option>
+                <option value="Mains">Other Main</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-700 mb-1">What are you bringing?</label>
+              <input type="text" id="dish-name" required placeholder="e.g. Mac & Cheese / IPA 6-pack" class="w-full text-xs p-2 border rounded-md">
+            </div>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" onclick="toggleDishForm()" class="text-xs text-gray-600 px-3 py-1.5">Cancel</button>
+            <button type="submit" class="bg-amber-700 text-white text-xs font-bold px-4 py-1.5 rounded-md">Save Item</button>
+          </div>
+        </form>
+
+        <!-- Category Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="potluck-categories-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
   <!-- Footer -->
-  <footer class="mt-16 py-6 border-t border-amber-900/10 text-center text-xs text-amber-900/60 bg-cream">
-    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p class="font-medium">Friendsgiving 6: Whoops I missed one • Warmth, Feast & Gratitude</p>
-      <button onclick="clearAllData()" class="text-xs text-red-500 hover:text-red-700 underline flex items-center gap-1">
-        <i class="ph-bold ph-trash"></i> Reset All Saved Application Data
-      </button>
-    </div>
+  <footer class="bg-amber-950 text-amber-300/60 text-xs py-6 text-center border-t border-amber-900">
+    <p>Friendsgiving 6: Whoops I missed one &bull; Hosted with ❤️ and Beer</p>
   </footer>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- MODAL 1: HOST PASSWORD PROMPT -->
+  <div id="password-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl space-y-4 border border-amber-200">
+      <div class="text-center space-y-1">
+        <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-2xl mb-2">
+          <i class="ph-bold ph-lock-key"></i>
+        </div>
+        <h3 class="text-lg font-bold font-heading text-gray-900">Host Authentication</h3>
+        <p class="text-xs text-gray-500">Enter host password to access administrative controls.</p>
+      </div>
+
+      <div>
+        <input type="password" id="host-password-input" placeholder="Password (default: beer2026)" class="w-full text-sm p-3 border rounded-xl focus:ring-2 focus:ring-amber-500 text-center font-mono">
+        <p id="password-error" class="text-xs text-red-600 text-center mt-1 hidden">Incorrect password. Try again!</p>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closePasswordModal()" class="flex-1 text-xs font-semibold py-2.5 px-4 border rounded-xl hover:bg-gray-50">Cancel</button>
+        <button onclick="verifyHostPassword()" class="flex-1 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm">Unlock</button>
+      </div>
+      <p class="text-[10px] text-gray-400 text-center">Default host password: <code class="bg-gray-100 px-1 py-0.5 rounded">beer2026</code></p>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CUSTOMIZE ARTWORK & THEME -->
+  <div id="image-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 class="text-lg font-bold font-heading text-amber-950 flex items-center gap-2">
+          <i class="ph-bold ph-palette text-amber-600"></i> Customize Theme & Artwork
+        </h3>
+        <button onclick="closeImageModal()" class="text-gray-400 hover:text-gray-600">
+          <i class="ph-bold ph-x text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Presets -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Select Preset Graphic</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="selectPresetGraphic('turkey')" class="p-2 border rounded-lg text-left text-xs font-medium hover:bg-amber-50 focus:border-amber-500 flex items-center gap-2">
+            <span>🦃</span> Drunk Turkey (Default)
+          </button>
+          <button onclick="selectPresetGraphic('feast')" class="p-2 border rounded-lg text-left text-xs font-medium hover:bg-amber-50 focus:border-amber-500 flex items-center gap-2">
+            <span>🍁</span> Autumn Feast
+          </button>
+          <button onclick="selectPresetGraphic('beer')" class="p-2 border rounded-lg text-left text-xs font-medium hover:bg-amber-50 focus:border-amber-500 flex items-center gap-2">
+            <span>🍻</span> Beer & Party Vibes
+          </button>
+          <button onclick="selectPresetGraphic('fireplace')" class="p-2 border rounded-lg text-left text-xs font-medium hover:bg-amber-50 focus:border-amber-500 flex items-center gap-2">
+            <span>🔥</span> Cozy Fireplace
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload Custom File -->
+      <div class="space-y-2 border-t pt-3">
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Upload Custom Image File</label>
+        <input type="file" id="custom-image-file" accept="image/*" onchange="handleFileUpload(event)" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200">
+      </div>
+
+      <!-- Web Image URL -->
+      <div class="space-y-2 border-t pt-3">
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Paste Web Image Link</label>
+        <div class="flex gap-2">
+          <input type="url" id="custom-url-input" placeholder="https://example.com/photo.jpg" class="flex-1 text-xs p-2 border rounded-lg">
+          <button onclick="applyUrlImage()" class="bg-amber-700 text-white text-xs font-bold px-3 py-2 rounded-lg">Apply</button>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t flex justify-end">
+        <button onclick="closeImageModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs py-2 px-4 rounded-lg">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    // Raw SVG artwork for Drunk Turkey Passed out on Couch
-    const DRUNK_TURKEY_SVG = `
-      <svg viewBox="0 0 280 200" class="w-full h-full drop-shadow-md" xmlns="http://www.w3.org/2000/svg">
-        <!-- Couch Backrest -->
-        <rect x="25" y="45" width="230" height="75" rx="15" fill="#8C3A27" stroke="#5C2216" stroke-width="3" />
-        <!-- Couch Cushions Base -->
-        <rect x="20" y="110" width="240" height="40" rx="10" fill="#A4452F" stroke="#5C2216" stroke-width="3" />
-        <!-- Couch Armrests -->
-        <rect x="10" y="85" width="25" height="70" rx="8" fill="#6E2B1C" stroke="#42180F" stroke-width="3" />
-        <rect x="245" y="85" width="25" height="70" rx="8" fill="#6E2B1C" stroke="#42180F" stroke-width="3" />
-        <!-- Couch Legs -->
-        <rect x="25" y="150" width="12" height="15" rx="2" fill="#3D1D11" />
-        <rect x="243" y="150" width="12" height="15" rx="2" fill="#3D1D11" />
-
-        <!-- Passed out Turkey Body -->
-        <path d="M 120 70 Q 110 30 130 25 Q 140 65 140 70 M 135 65 Q 135 20 155 20 Q 160 65 160 70 M 155 65 Q 165 25 180 35 Q 170 70 170 75" stroke="#D97706" stroke-width="12" stroke-linecap="round" fill="none" />
-        <path d="M 120 70 Q 110 30 130 25 Q 140 65 140 70 M 135 65 Q 135 20 155 20 Q 160 65 160 70 M 155 65 Q 165 25 180 35 Q 170 70 170 75" stroke="#B45309" stroke-width="6" stroke-linecap="round" fill="none" />
-
-        <!-- Turkey Plump Belly -->
-        <ellipse cx="140" cy="115" rx="42" ry="26" fill="#78350F" stroke="#451A03" stroke-width="3" />
-        <path d="M 120 110 Q 140 130 160 118" fill="none" stroke="#92400E" stroke-width="12" stroke-linecap="round" />
-
-        <!-- Drumsticks -->
-        <path d="M 170 120 L 210 132" stroke="#78350F" stroke-width="10" stroke-linecap="round" />
-        <path d="M 210 132 L 222 128 M 210 132 L 225 133 M 210 132 L 220 139" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" />
-
-        <!-- Head -->
-        <path d="M 105 115 C 80 115 65 110 50 100" fill="none" stroke="#78350F" stroke-width="16" stroke-linecap="round" />
-        <circle cx="48" cy="98" r="14" fill="#78350F" />
-        <path d="M 42 98 Q 35 112 40 118" stroke="#DC2626" stroke-width="5" stroke-linecap="round" fill="none" />
-        <polygon points="36,95 24,98 35,103" fill="#F59E0B" />
-        <path d="M 44 92 L 50 98 M 50 92 L 44 98" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
-
-        <!-- Spilled Bottle -->
-        <g transform="translate(180, 155) rotate(75)">
-          <rect x="0" y="0" width="14" height="32" rx="3" fill="#15803D" />
-          <rect x="4" y="-8" width="6" height="10" fill="#15803D" />
-          <rect x="3" y="10" width="8" height="12" fill="#FEF08A" />
-          <ellipse cx="-10" cy="5" rx="12" ry="4" fill="#7F1D1D" opacity="0.8" />
-        </g>
-
-        <!-- Zzz -->
-        <text x="25" y="80" fill="#FEF3C7" font-size="14" font-weight="bold" font-family="sans-serif">Z</text>
-        <text x="18" y="65" fill="#FEF3C7" font-size="11" font-weight="bold" font-family="sans-serif">z</text>
-        <text x="12" y="53" fill="#FEF3C7" font-size="9" font-weight="bold" font-family="sans-serif">z</text>
-        <text x="58" y="80" fill="#F59E0B" font-size="10">💫</text>
-      </svg>
-    `;
-
-    // Preset Image Assets
-    const PRESETS = {
-      turkey_couch: { type: 'svg', value: DRUNK_TURKEY_SVG },
-      autumn_feast: { type: 'url', value: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=800&q=80' },
-      beer_cheers: { type: 'url', value: 'https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?auto=format&fit=crop&w=800&q=80' },
-      cozy_fireplace: { type: 'url', value: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80' }
-    };
-
-    // Initial App State Structure
-    const DEFAULT_DATA = {
-      activePhase: 'poll', // 'poll' or 'rsvp'
-      confirmedDate: null,
-      theme: {
-        presetKey: 'turkey_couch',
-        type: 'svg', // 'svg', 'url', 'custom'
-        imageUrl: '',
-        target: 'card' // 'card' or 'banner'
-      },
-      candidateDates: ['Fri, Nov 20', 'Sat, Nov 21', 'Sun, Nov 22', 'Fri, Nov 27', 'Sat, Nov 28'],
-      votes: [
-        { name: 'Sarah M.', availableDates: ['Fri, Nov 20', 'Sat, Nov 21', 'Sat, Nov 28'] },
-        { name: 'David K.', availableDates: ['Sat, Nov 21', 'Sun, Nov 22'] },
-        { name: 'Elena R.', availableDates: ['Sat, Nov 21', 'Sat, Nov 28'] }
+    // CORE APP STATE IN LOCALSTORAGE
+    const DEFAULT_STATE = {
+      hostPassword: 'beer2026',
+      isHostUnlocked: false,
+      phase: 'poll', // 'poll' or 'rsvp'
+      lockedDate: null,
+      customImage: null, // SVG preset, Base64, or URL
+      presetGraphic: 'turkey',
+      dates: [
+        { id: 1, text: 'Friday, Nov 20 @ 6:00 PM', votes: [] },
+        { id: 2, text: 'Saturday, Nov 21 @ 4:00 PM', votes: [] },
+        { id: 3, text: 'Sunday, Nov 22 @ 2:00 PM', votes: [] },
+        { id: 4, text: 'Friday, Nov 27 @ 5:00 PM', votes: [] },
+        { id: 5, text: 'Saturday, Nov 28 @ 4:00 PM', votes: [] }
       ],
-      rsvps: [
-        { name: 'Sarah M.', status: 'Attending', dietary: 'Vegetarian', dishCategory: 'Side Dish', dishName: 'Garlic Mashed Potatoes & Gravy' },
-        { name: 'David K.', status: 'Attending', dietary: 'None', dishCategory: 'Main Dish', dishName: 'Herb-Roasted Turkey' },
-        { name: 'Elena R.', status: 'Maybe', dietary: 'Gluten-Free', dishCategory: 'Dessert', dishName: 'Gluten-Free Pumpkin Pie' }
-      ]
+      rsvps: [],
+      potluck: []
     };
 
-    // Load State from LocalStorage or Fallback
-    let appState = JSON.parse(localStorage.getItem('friendsgiving_planner_data_v6')) || DEFAULT_DATA;
-    if (!appState.theme) appState.theme = DEFAULT_DATA.theme;
+    let appData = loadState();
+
+    function loadState() {
+      const saved = localStorage.getItem('friendsgiving_app_data_v2');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error("Failed to load state", e);
+        }
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
 
     function saveState() {
-      localStorage.setItem('friendsgiving_planner_data_v6', JSON.stringify(appState));
+      localStorage.setItem('friendsgiving_app_data_v2', JSON.stringify(appData));
       renderApp();
     }
 
-    // App Initialization
-    window.onload = function() {
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
       renderApp();
-    };
+    });
 
-    function toggleHostGuide(show) {
-      const modal = document.getElementById('host-guide-modal');
-      if (show) modal.classList.remove('hidden');
-      else modal.classList.add('hidden');
+    function renderApp() {
+      renderHostHeader();
+      renderPhaseView();
+      renderArtwork();
     }
 
-    function toggleThemeModal(show) {
-      const modal = document.getElementById('theme-modal');
-      if (show) modal.classList.remove('hidden');
-      else modal.classList.add('hidden');
+    // HOST AUTHENTICATION LOGIC
+    function handleHostAccessToggle() {
+      if (appData.isHostUnlocked) {
+        appData.isHostUnlocked = false;
+        saveState();
+      } else {
+        document.getElementById('password-modal').classList.remove('hidden');
+        document.getElementById('host-password-input').focus();
+      }
     }
 
-    // Theme & Background Switcher Logic
-    function setPresetTheme(key) {
-      const preset = PRESETS[key];
-      if (!preset) return;
-      appState.theme.presetKey = key;
-      appState.theme.type = preset.type;
-      appState.theme.imageUrl = preset.type === 'url' ? preset.value : '';
+    function closePasswordModal() {
+      document.getElementById('password-modal').classList.add('hidden');
+      document.getElementById('password-error').classList.add('hidden');
+      document.getElementById('host-password-input').value = '';
+    }
+
+    function verifyHostPassword() {
+      const input = document.getElementById('host-password-input').value;
+      if (input === appData.hostPassword) {
+        appData.isHostUnlocked = true;
+        closePasswordModal();
+        saveState();
+      } else {
+        document.getElementById('password-error').classList.remove('hidden');
+      }
+    }
+
+    function renderHostHeader() {
+      const btnLabel = document.getElementById('host-btn-label');
+      const lockIcon = document.getElementById('host-lock-icon');
+      const statusInd = document.getElementById('host-status-indicator');
+      const panel = document.getElementById('host-controls-panel');
+
+      if (appData.isHostUnlocked) {
+        btnLabel.textContent = 'Lock Host Controls';
+        lockIcon.className = 'ph-bold ph-lock-key-open text-emerald-400';
+        statusInd.textContent = 'Host Mode (Unlocked)';
+        panel.classList.remove('hidden');
+        populateHostDateDropdown();
+      } else {
+        btnLabel.textContent = 'Host Login';
+        lockIcon.className = 'ph-bold ph-lock-key';
+        statusInd.textContent = 'Guest Mode';
+        panel.classList.add('hidden');
+      }
+    }
+
+    function populateHostDateDropdown() {
+      const select = document.getElementById('host-date-select');
+      select.innerHTML = '';
+      appData.dates.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.text;
+        opt.textContent = `${d.text} (${d.votes.length} votes)`;
+        if (appData.lockedDate === d.text) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function lockSelectedDate() {
+      const select = document.getElementById('host-date-select');
+      if (!select.value) return;
+      appData.lockedDate = select.value;
+      appData.phase = 'rsvp';
       saveState();
     }
 
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
+    function unlockDate() {
+      appData.phase = 'poll';
+      saveState();
+    }
+
+    function addNewCandidateDate(e) {
+      e.preventDefault();
+      const input = document.getElementById('new-date-input');
+      const text = input.value.trim();
+      if (!text) return;
+      
+      appData.dates.push({
+        id: Date.now(),
+        text: text,
+        votes: []
+      });
+      input.value = '';
+      saveState();
+    }
+
+    // CLEAR ALL DATA FUNCTION (HOST ONLY)
+    function confirmClearAllData() {
+      if (confirm("Are you sure you want to CLEAR ALL VOTES, RSVPs, and POTLUCK DISHES? This action cannot be undone.")) {
+        appData.dates.forEach(d => d.votes = []);
+        appData.rsvps = [];
+        appData.potluck = [];
+        saveState();
+        alert("All entries have been cleared successfully!");
+      }
+    }
+
+    // RENDER PHASES
+    function renderPhaseView() {
+      const pollSection = document.getElementById('phase-poll');
+      const rsvpSection = document.getElementById('phase-rsvp');
+
+      if (appData.phase === 'poll') {
+        pollSection.classList.remove('hidden');
+        rsvpSection.classList.add('hidden');
+        renderPollOptions();
+      } else {
+        pollSection.classList.add('hidden');
+        rsvpSection.classList.remove('hidden');
+        document.getElementById('locked-date-display').textContent = appData.lockedDate || 'TBD';
+        renderRSVPList();
+        renderPotluckBoard();
+      }
+    }
+
+    // PHASE 1: POLL LOGIC
+    function renderPollOptions() {
+      const container = document.getElementById('poll-options-container');
+      container.innerHTML = '';
+
+      // Calculate total voters
+      const allVoters = new Set();
+      appData.dates.forEach(d => d.votes.forEach(v => allVoters.add(v)));
+      const totalVotersCount = allVoters.size || 1;
+
+      appData.dates.forEach(item => {
+        const voteCount = item.votes.length;
+        const percent = Math.round((voteCount / totalVotersCount) * 100);
+
+        const card = document.createElement('div');
+        card.className = "p-4 rounded-xl border border-gray-200 bg-gray-50/50 hover:bg-white transition-all space-y-2";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" data-date-id="${item.id}" class="date-checkbox w-5 h-5 rounded text-amber-600 focus:ring-amber-500 border-gray-300">
+              <span class="font-semibold text-gray-900 text-sm sm:text-base">${item.text}</span>
+            </label>
+            <span class="text-xs font-bold text-amber-900 bg-amber-100 px-2.5 py-1 rounded-full">
+              ${voteCount} vote${voteCount === 1 ? '' : 's'}
+            </span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+            <div class="bg-amber-600 h-full transition-all duration-500" style="width: ${percent}%"></div>
+          </div>
+
+          ${item.votes.length > 0 ? `
+            <p class="text-[11px] text-gray-500 truncate">
+              <strong>Voted:</strong> ${item.votes.join(', ')}
+            </p>
+          ` : ''}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function submitPollVote() {
+      const nameInput = document.getElementById('voter-name');
+      const name = nameInput.value.trim();
+      if (!name) {
+        alert("Please enter your name to save your vote.");
+        return;
+      }
+
+      const checkboxes = document.querySelectorAll('.date-checkbox');
+      checkboxes.forEach(cb => {
+        const dateId = parseInt(cb.getAttribute('data-date-id'));
+        const dateObj = appData.dates.find(d => d.id === dateId);
+        
+        if (dateObj) {
+          // Remove previous vote if exists
+          dateObj.votes = dateObj.votes.filter(v => v.toLowerCase() !== name.toLowerCase());
+          // If checked, add
+          if (cb.checked) {
+            dateObj.votes.push(name);
+          }
+        }
+      });
+
+      nameInput.value = '';
+      saveState();
+      alert(`Thank you, ${name}! Your availability has been saved.`);
+    }
+
+    // PHASE 2: RSVP LOGIC
+    function submitRSVP(e) {
+      e.preventDefault();
+      const name = document.getElementById('rsvp-name').value.trim();
+      const status = document.getElementById('rsvp-status').value;
+      const diet = document.getElementById('rsvp-diet').value.trim();
+
+      if (!name) return;
+
+      // Update or add
+      const existingIdx = appData.rsvps.findIndex(r => r.name.toLowerCase() === name.toLowerCase());
+      const record = { name, status, diet, timestamp: new Date().toISOString() };
+
+      if (existingIdx >= 0) {
+        appData.rsvps[existingIdx] = record;
+      } else {
+        appData.rsvps.push(record);
+      }
+
+      document.getElementById('rsvp-name').value = '';
+      document.getElementById('rsvp-diet').value = '';
+      saveState();
+      alert(`RSVP saved for ${name}!`);
+    }
+
+    function renderRSVPList() {
+      const container = document.getElementById('rsvp-attendees-list');
+      container.innerHTML = '';
+
+      const attending = appData.rsvps.filter(r => r.status === 'attending');
+      document.getElementById('count-attending').textContent = attending.length;
+      document.getElementById('count-total-responses').textContent = `${appData.rsvps.length} responses total`;
+
+      if (appData.rsvps.length === 0) {
+        container.innerHTML = `<p class="text-xs text-gray-400 col-span-full">No RSVPs yet. Be the first!</p>`;
+        return;
+      }
+
+      appData.rsvps.forEach(r => {
+        let badgeColor = "bg-emerald-100 text-emerald-800 border-emerald-300";
+        let statusText = "Attending";
+        if (r.status === 'maybe') { badgeColor = "bg-amber-100 text-amber-800 border-amber-300"; statusText = "Maybe"; }
+        if (r.status === 'declined') { badgeColor = "bg-red-100 text-red-800 border-red-300"; statusText = "Declined"; }
+
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-xl border bg-gray-50 flex flex-col justify-between space-y-1 text-xs";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-gray-900">${r.name}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeColor}">${statusText}</span>
+          </div>
+          ${r.diet ? `<p class="text-[11px] text-gray-500 italic">"${r.diet}"</p>` : ''}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // POTLUCK LOGIC
+    function toggleDishForm() {
+      document.getElementById('add-dish-form').classList.toggle('hidden');
+    }
+
+    function submitDish(e) {
+      e.preventDefault();
+      const bringer = document.getElementById('dish-bringer').value.trim();
+      const category = document.getElementById('dish-category').value;
+      const name = document.getElementById('dish-name').value.trim();
+
+      if (!bringer || !name) return;
+
+      appData.potluck.push({
+        id: Date.now(),
+        bringer,
+        category,
+        name
+      });
+
+      document.getElementById('dish-bringer').value = '';
+      document.getElementById('dish-name').value = '';
+      toggleDishForm();
+      saveState();
+    }
+
+    function deleteDish(id) {
+      if (!appData.isHostUnlocked) {
+        alert("Only the host can delete dish items once added.");
+        return;
+      }
+      appData.potluck = appData.potluck.filter(p => p.id !== id);
+      saveState();
+    }
+
+    function renderPotluckBoard() {
+      const container = document.getElementById('potluck-categories-grid');
+      container.innerHTML = '';
+
+      const categories = ['Sides', 'Desserts', 'Drinks', 'Appetizers', 'Mains'];
+
+      categories.forEach(cat => {
+        const items = appData.potluck.filter(p => p.category === cat);
+
+        const card = document.createElement('div');
+        card.className = "p-4 rounded-xl border border-gray-200 bg-gray-50/50 space-y-2";
+        
+        let itemsHtml = items.length === 0 
+          ? `<p class="text-xs text-gray-400 italic">Nothing listed yet</p>`
+          : items.map(item => `
+            <div class="flex items-center justify-between bg-white p-2 rounded-lg border text-xs shadow-2xs">
+              <span class="font-medium text-gray-800">${item.name}</span>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded">${item.bringer}</span>
+                ${appData.isHostUnlocked ? `
+                  <button onclick="deleteDish(${item.id})" class="text-red-500 hover:text-red-700">
+                    <i class="ph-bold ph-x text-xs"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          `).join('');
+
+        card.innerHTML = `
+          <h4 class="font-bold text-xs text-amber-900 uppercase tracking-wider flex items-center justify-between">
+            <span>${cat}</span>
+            <span class="text-[10px] font-normal text-gray-500">(${items.length})</span>
+          </h4>
+          <div class="space-y-1.5">${itemsHtml}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // ARTWORK & THEME CUSTOMIZATION
+    function openImageModal() {
+      document.getElementById('image-modal').classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+      document.getElementById('image-modal').classList.add('hidden');
+    }
+
+    function selectPresetGraphic(presetKey) {
+      appData.presetGraphic = presetKey;
+      appData.customImage = null; // reset URL/base64
+      saveState();
+      closeImageModal();
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
-        appState.theme.presetKey = 'custom';
-        appState.theme.type = 'custom';
-        appState.theme.imageUrl = e.target.result;
+      reader.onload = function(evt) {
+        appData.customImage = evt.target.result;
         saveState();
-        toggleThemeModal(false);
+        closeImageModal();
       };
       reader.readAsDataURL(file);
     }
 
-    function handleUrlSubmit() {
-      const urlInput = document.getElementById('custom-url-input');
-      const url = urlInput.value.trim();
+    function applyUrlImage() {
+      const url = document.getElementById('custom-url-input').value.trim();
       if (!url) return;
-
-      appState.theme.presetKey = 'custom';
-      appState.theme.type = 'url';
-      appState.theme.imageUrl = url;
+      appData.customImage = url;
       saveState();
-      toggleThemeModal(false);
+      closeImageModal();
     }
 
-    function setImageTarget(target) {
-      appState.theme.target = target;
-      saveState();
-    }
+    function renderArtwork() {
+      const display = document.getElementById('artwork-display');
 
-    // Render Dynamic Artwork and Background
-    function renderArtworkAndTheme() {
-      const displayArea = document.getElementById('artwork-display-area');
-      const headerBanner = document.getElementById('header-banner');
-      const headerOverlay = document.getElementById('header-overlay');
-      const defaultBgDecor = document.getElementById('default-header-bg-decor');
-
-      // Sync radio selection state
-      const targetRadios = document.getElementsByName('image-target');
-      targetRadios.forEach(r => {
-        r.checked = (r.value === appState.theme.target);
-      });
-
-      // Clear full banner image defaults first
-      if (appState.theme.target === 'banner' && appState.theme.type !== 'svg' && appState.theme.imageUrl) {
-        headerBanner.style.backgroundImage = `url('${appState.theme.imageUrl}')`;
-        headerBanner.classList.add('header-bg-cover');
-        headerOverlay.classList.remove('hidden');
-        defaultBgDecor.classList.add('hidden');
-      } else {
-        headerBanner.style.backgroundImage = 'none';
-        headerBanner.classList.remove('header-bg-cover');
-        headerOverlay.classList.add('hidden');
-        defaultBgDecor.classList.remove('hidden');
-      }
-
-      // Render inner artwork card
-      if (appState.theme.type === 'svg') {
-        displayArea.innerHTML = DRUNK_TURKEY_SVG;
-      } else if (appState.theme.imageUrl) {
-        displayArea.innerHTML = `
-          <img src="${appState.theme.imageUrl}" alt="Friendsgiving Header Graphic" class="w-full h-full object-cover rounded-2xl shadow-inner" onerror="this.onerror=null; this.src='https://placehold.co/400x300/78350f/ffffff?text=Friendsgiving';">
-        `;
-      } else {
-        displayArea.innerHTML = DRUNK_TURKEY_SVG;
-      }
-    }
-
-    // Switch View Phase
-    function switchPhase(phase) {
-      appState.activePhase = phase;
-      saveState();
-    }
-
-    // Main Master Render
-    function renderApp() {
-      renderArtworkAndTheme();
-      renderHeaderNav();
-      renderStatusBanner();
-      renderPollSection();
-      renderRsvpSection();
-
-      // Show/Hide Sections based on Active Phase
-      const pollSec = document.getElementById('phase-poll');
-      const rsvpSec = document.getElementById('phase-rsvp');
-
-      if (appState.activePhase === 'poll') {
-        pollSec.classList.remove('hidden');
-        rsvpSec.classList.add('hidden');
-      } else {
-        pollSec.classList.add('hidden');
-        rsvpSec.classList.remove('hidden');
-      }
-    }
-
-    // Render Navigation Buttons
-    function renderHeaderNav() {
-      const pollBtn = document.getElementById('nav-poll-btn');
-      const rsvpBtn = document.getElementById('nav-rsvp-btn');
-
-      if (appState.activePhase === 'poll') {
-        pollBtn.className = "px-5 py-2 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 bg-white text-amber-900 shadow-md";
-        rsvpBtn.className = "px-5 py-2 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 text-white hover:bg-white/10";
-      } else {
-        rsvpBtn.className = "px-5 py-2 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 bg-white text-amber-900 shadow-md";
-        pollBtn.className = "px-5 py-2 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 text-white hover:bg-white/10";
-      }
-    }
-
-    // Render Status Banner
-    function renderStatusBanner() {
-      const banner = document.getElementById('status-banner');
-      if (appState.confirmedDate) {
-        banner.className = "mb-8 p-5 rounded-2xl border bg-forest-50 border-forest-200 text-forest-900 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm";
-        banner.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="p-3 bg-forest-700 text-white rounded-xl">
-              <i class="ph-fill ph-check-circle text-2xl"></i>
-            </div>
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-forest-700">Date Finalized!</span>
-              <h3 class="text-xl font-bold font-serif-title">Friendsgiving 6 is set for ${appState.confirmedDate}</h3>
-            </div>
-          </div>
-          <button onclick="switchPhase('rsvp')" class="w-full sm:w-auto px-5 py-2.5 bg-forest-700 hover:bg-forest-800 text-white text-sm font-semibold rounded-xl transition shadow">
-            Go to RSVP & Potluck →
-          </button>
-        `;
-      } else {
-        banner.className = "mb-8 p-5 rounded-2xl border bg-amber-50 border-amber-200 text-amber-900 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm";
-        banner.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="p-3 bg-amber-500 text-white rounded-xl">
-              <i class="ph-fill ph-hourglass-high text-2xl"></i>
-            </div>
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-amber-800">Voting in Progress</span>
-              <h3 class="text-base font-bold">Help us pick the best date for our feast!</h3>
-            </div>
-          </div>
-          <span class="text-xs font-medium text-amber-800 bg-amber-100/80 px-3 py-1.5 rounded-lg border border-amber-200">
-            ${appState.votes.length} people voted so far
-          </span>
-        `;
-      }
-    }
-
-    // ================= POLL FUNCTIONS =================
-
-    function renderPollSection() {
-      const dateListContainer = document.getElementById('candidate-dates-list');
-      dateListContainer.innerHTML = appState.candidateDates.map((date) => `
-        <label class="flex items-center justify-between p-3 rounded-xl border border-gray-200 bg-white hover:border-amber-400 cursor-pointer transition">
-          <div class="flex items-center gap-3">
-            <input type="checkbox" name="voted-dates" value="${date}" class="w-4 h-4 text-terracotta-600 rounded border-gray-300 focus:ring-terracotta-500">
-            <span class="text-sm font-medium text-gray-800">${date}</span>
-          </div>
-        </label>
-      `).join('');
-
-      const finalizeSelect = document.getElementById('finalize-date-select');
-      finalizeSelect.innerHTML = appState.candidateDates.map(date => `
-        <option value="${date}" ${appState.confirmedDate === date ? 'selected' : ''}>${date}</option>
-      `).join('');
-
-      const totalVoters = appState.votes.length;
-      document.getElementById('total-voters-count').innerText = `${totalVoters} participant${totalVoters === 1 ? '' : 's'} voted`;
-
-      const resultsContainer = document.getElementById('poll-results-container');
-      const voterBreakdown = document.getElementById('voter-breakdown-list');
-
-      resultsContainer.innerHTML = '';
-      voterBreakdown.innerHTML = '';
-
-      if (appState.candidateDates.length === 0) {
-        resultsContainer.innerHTML = `<p class="text-sm text-gray-400 italic">No candidate dates added yet.</p>`;
+      if (appData.customImage) {
+        display.innerHTML = `<img src="${appData.customImage}" alt="Custom Header Graphic" class="w-full h-full object-cover rounded-xl shadow">`;
         return;
       }
 
-      appState.candidateDates.forEach(date => {
-        const votersForDate = appState.votes.filter(v => v.availableDates.includes(date)).map(v => v.name);
-        const count = votersForDate.length;
-        const percentage = totalVoters > 0 ? Math.round((count / totalVoters) * 100) : 0;
-        const isWinner = appState.confirmedDate === date;
-
-        const barElem = document.createElement('div');
-        barElem.className = "space-y-1.5";
-        barElem.innerHTML = `
-          <div class="flex justify-between items-center text-sm">
-            <span class="font-semibold text-gray-800 flex items-center gap-2">
-              ${date}
-              ${isWinner ? '<span class="text-xs px-2 py-0.5 bg-forest-100 text-forest-800 font-bold rounded-full">Winning Date</span>' : ''}
-            </span>
-            <span class="text-xs font-semibold text-gray-500">${count} vote${count === 1 ? '' : 's'} (${percentage}%)</span>
-          </div>
-          <div class="w-full bg-gray-100 h-3.5 rounded-full overflow-hidden flex">
-            <div class="h-full ${isWinner ? 'bg-forest-700' : 'bg-terracotta-500'} transition-all duration-500 rounded-full" style="width: ${percentage}%"></div>
-          </div>
+      // Render preset SVGs
+      if (appData.presetGraphic === 'turkey') {
+        display.innerHTML = `
+          <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#78350F"/>
+            <rect x="20" y="110" width="160" height="60" rx="12" fill="#9A3412"/>
+            <rect x="15" y="90" width="25" height="70" rx="8" fill="#7C2D12"/>
+            <rect x="160" y="90" width="25" height="70" rx="8" fill="#7C2D12"/>
+            <rect x="35" y="115" width="60" height="35" rx="6" fill="#C2410C"/>
+            <rect x="100" y="115" width="60" height="35" rx="6" fill="#C2410C"/>
+            <path d="M 30 110 Q 15 100 20 85 Q 35 95 40 110 Z" fill="#D97706"/>
+            <path d="M 35 105 Q 25 85 35 75 Q 45 90 45 105 Z" fill="#B45309"/>
+            <path d="M 42 105 Q 40 80 52 75 Q 55 90 50 105 Z" fill="#92400E"/>
+            <ellipse cx="90" cy="120" rx="35" ry="20" fill="#B45309"/>
+            <path d="M 80 120 C 70 135 60 145 65 150 C 75 152 85 135 90 125 Z" fill="#78350F"/>
+            <path d="M 120 120 Q 145 125 150 135" stroke="#D97706" stroke-width="12" stroke-linecap="round"/>
+            <circle cx="152" cy="136" r="10" fill="#D97706"/>
+            <path d="M 152 136 Q 155 148 150 152" stroke="#DC2626" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <polygon points="158,134 168,137 158,142" fill="#F59E0B"/>
+            <path d="M 148 132 L 154 138 M 154 132 L 148 138" stroke="#451A03" stroke-width="2"/>
+            <g transform="translate(110, 168) rotate(75)">
+              <rect x="0" y="0" width="8" height="18" fill="#047857" rx="2"/>
+              <rect x="2" y="-6" width="4" height="7" fill="#047857"/>
+              <rect x="1" y="4" width="6" height="8" fill="#FEF08A"/>
+            </g>
+            <ellipse cx="135" cy="173" rx="12" ry="3" fill="#F59E0B" opacity="0.6"/>
+            <text x="160" y="115" fill="#FEF3C7" font-family="sans-serif" font-weight="bold" font-size="14">Z</text>
+            <text x="170" y="102" fill="#FEF3C7" font-family="sans-serif" font-weight="bold" font-size="11">z</text>
+            <text x="178" y="92" fill="#FEF3C7" font-family="sans-serif" font-weight="bold" font-size="9">z</text>
+          </svg>
         `;
-        resultsContainer.appendChild(barElem);
-
-        const breakdownElem = document.createElement('div');
-        breakdownElem.className = "text-xs p-2.5 rounded-xl bg-gray-50 border border-gray-100 flex justify-between items-center";
-        breakdownElem.innerHTML = `
-          <span class="font-semibold text-gray-700">${date}</span>
-          <span class="text-gray-500">${votersForDate.length > 0 ? votersForDate.join(', ') : 'No votes yet'}</span>
-        `;
-        voterBreakdown.appendChild(breakdownElem);
-      });
-    }
-
-    function handleVoteSubmit(e) {
-      e.preventDefault();
-      const nameInput = document.getElementById('voter-name');
-      const name = nameInput.value.trim();
-      const checkboxes = document.querySelectorAll('input[name="voted-dates"]:checked');
-      const selectedDates = Array.from(checkboxes).map(cb => cb.value);
-
-      if (!name) return;
-      if (selectedDates.length === 0) {
-        alert("Please select at least one date that works for you!");
-        return;
-      }
-
-      const existingIdx = appState.votes.findIndex(v => v.name.toLowerCase() === name.toLowerCase());
-      if (existingIdx >= 0) {
-        appState.votes[existingIdx].availableDates = selectedDates;
-      } else {
-        appState.votes.push({ name, availableDates: selectedDates });
-      }
-
-      nameInput.value = '';
-      saveState();
-    }
-
-    function addCandidateDate() {
-      const input = document.getElementById('new-date-input');
-      const newDate = input.value.trim();
-      if (newDate && !appState.candidateDates.includes(newDate)) {
-        appState.candidateDates.push(newDate);
-        input.value = '';
-        saveState();
-      }
-    }
-
-    function finalizeDate() {
-      const select = document.getElementById('finalize-date-select');
-      if (!select.value) return;
-      appState.confirmedDate = select.value;
-      appState.activePhase = 'rsvp';
-      saveState();
-    }
-
-    function reopenPoll() {
-      appState.activePhase = 'poll';
-      saveState();
-    }
-
-    // ================= RSVP & POTLUCK FUNCTIONS =================
-
-    function renderRsvpSection() {
-      const guestPillsList = document.getElementById('guest-pills-list');
-      const potluckGrid = document.getElementById('potluck-categories-grid');
-
-      const attendingCount = appState.rsvps.filter(r => r.status === 'Attending').length;
-      const maybeCount = appState.rsvps.filter(r => r.status === 'Maybe').length;
-
-      document.getElementById('badge-attending').innerText = `${attendingCount} Attending`;
-      document.getElementById('badge-maybe').innerText = `${maybeCount} Maybe`;
-
-      if (appState.rsvps.length === 0) {
-        guestPillsList.innerHTML = `<span class="text-xs text-gray-400 italic">No RSVPs submitted yet.</span>`;
-      } else {
-        guestPillsList.innerHTML = appState.rsvps.map(r => {
-          let badgeStyle = "bg-forest-50 border-forest-200 text-forest-800";
-          if (r.status === 'Maybe') badgeStyle = "bg-amber-50 border-amber-200 text-amber-800";
-          if (r.status === 'Declined') badgeStyle = "bg-red-50 border-red-200 text-red-800";
-
-          return `
-            <div class="px-3 py-1.5 rounded-xl border ${badgeStyle} text-xs font-semibold flex items-center gap-1.5">
-              <span>${r.name}</span>
-              ${r.dietary ? `<span class="bg-white/80 px-1.5 py-0.5 rounded text-[10px] font-normal border border-gray-200" title="Dietary Note">${r.dietary}</span>` : ''}
-              <button onclick="removeRsvp('${r.name}')" class="text-gray-400 hover:text-red-600 ml-1" title="Remove RSVP">&times;</button>
-            </div>
-          `;
-        }).join('');
-      }
-
-      const categories = [
-        { key: 'Main Dish', title: '🦃 Main Dishes', color: 'bg-amber-50/50 border-amber-200' },
-        { key: 'Side Dish', title: '🥔 Side Dishes', color: 'bg-orange-50/50 border-orange-200' },
-        { key: 'Appetizer', title: '🧀 Appetizers & Starters', color: 'bg-yellow-50/50 border-yellow-200' },
-        { key: 'Dessert', title: '🥧 Desserts & Sweets', color: 'bg-red-50/50 border-red-200' },
-        { key: 'Beverages', title: '🍷 Beverages & Drinks', color: 'bg-emerald-50/50 border-emerald-200' },
-        { key: 'Supplies', title: '🍽️ Tableware & Supplies', color: 'bg-slate-50 border-slate-200' }
-      ];
-
-      potluckGrid.innerHTML = categories.map(cat => {
-        const items = appState.rsvps.filter(r => r.dishCategory === cat.key && r.dishName && r.dishName.trim() !== '');
-
-        return `
-          <div class="p-4 rounded-2xl border ${cat.color}">
-            <h3 class="text-sm font-bold text-gray-800 mb-3">${cat.title}</h3>
-            ${items.length === 0 ? `
-              <p class="text-xs text-gray-400 italic">Nothing claimed yet in this category.</p>
-            ` : `
-              <div class="space-y-2">
-                ${items.map(item => `
-                  <div class="flex justify-between items-center bg-white p-2.5 rounded-xl border border-gray-200/80 text-xs shadow-sm">
-                    <span class="font-medium text-gray-800">${item.dishName}</span>
-                    <div class="flex items-center gap-2">
-                      <span class="text-gray-500 font-semibold bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100">by ${item.name}</span>
-                      <button onclick="removeDish('${item.name}')" class="text-gray-400 hover:text-red-500 p-1" title="Remove Item">
-                        <i class="ph-bold ph-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            `}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function handleRsvpSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('rsvp-name').value.trim();
-      const status = document.querySelector('input[name="attendance"]:checked').value;
-      const dietary = document.getElementById('dietary-notes').value.trim();
-      const dishCategory = document.getElementById('dish-category').value;
-      const dishName = document.getElementById('dish-name').value.trim();
-
-      if (!name) return;
-
-      const rsvpData = { name, status, dietary, dishCategory, dishName };
-
-      const existingIdx = appState.rsvps.findIndex(r => r.name.toLowerCase() === name.toLowerCase());
-      if (existingIdx >= 0) {
-        appState.rsvps[existingIdx] = rsvpData;
-      } else {
-        appState.rsvps.push(rsvpData);
-      }
-
-      document.getElementById('rsvp-name').value = '';
-      document.getElementById('dietary-notes').value = '';
-      document.getElementById('dish-name').value = '';
-
-      saveState();
-    }
-
-    function removeRsvp(name) {
-      appState.rsvps = appState.rsvps.filter(r => r.name !== name);
-      saveState();
-    }
-
-    function removeDish(name) {
-      const idx = appState.rsvps.findIndex(r => r.name === name);
-      if (idx >= 0) {
-        appState.rsvps[idx].dishName = '';
-        saveState();
-      }
-    }
-
-    // Reset application state
-    function clearAllData() {
-      if (confirm("Are you sure you want to reset all survey responses, potluck items, and custom images?")) {
-        localStorage.removeItem('friendsgiving_planner_data_v6');
-        appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
-        saveState();
+      } else if (appData.presetGraphic === 'feast') {
+        display.innerHTML = `<div class="text-6xl text-center">🍁🥧🍗</div>`;
+      } else if (appData.presetGraphic === 'beer') {
+        display.innerHTML = `<div class="text-6xl text-center">🍻🍺🎉</div>`;
+      } else if (appData.presetGraphic === 'fireplace') {
+        display.innerHTML = `<div class="text-6xl text-center">🔥🛋️🍷</div>`;
       }
     }
   </script>
