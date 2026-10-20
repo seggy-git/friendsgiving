@@ -72,6 +72,7 @@
         <div class="flex-shrink-0 flex flex-col items-center">
           <div id="hero-image-container" class="w-48 h-48 sm:w-56 sm:h-56 bg-slate-900/80 border-2 border-amber-500/30 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden relative group backdrop-blur-sm">
             <div id="artwork-display" class="w-full h-full flex items-center justify-center p-2">
+              <!-- SVG Artwork: Drunk Turkey Passed Out on Couch -->
               <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <rect width="200" height="200" fill="#1E1B4B"/>
                 <rect x="20" y="110" width="160" height="60" rx="12" fill="#7C2D12"/>
@@ -482,13 +483,13 @@
     // STEP 1: Paste Your Free Firebase Config Below
     // ----------------------------------------------------
     const firebaseConfig = {
-      apiKey: "AIzaSyAxrDSYffYYTg_c7Z-xaoNc34o8PAI7lq0",
-      authDomain: "friendsgiving-567a9.firebaseapp.com",
-      projectId: "friendsgiving-567a9",
-      storageBucket: "friendsgiving-567a9.firebasestorage.app",
-      messagingSenderId: "1027443271280",
-      appId: "1:1027443271280:web:1f62e6a1de376b888676b5",
-      measurementId: "G-Q6PWE7E5VY"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
     // Initialize Firebase
@@ -497,7 +498,7 @@
       firebase.initializeApp(firebaseConfig);
       db = firebase.database();
     } catch (e) {
-      console.warn("Firebase not configured yet. Falling back to local state.", e);
+      console.warn("Firebase not configured yet.", e);
     }
 
     const DEFAULT_DATES = [
@@ -543,7 +544,6 @@
           if (!appData.rsvps) appData.rsvps = [];
           if (!appData.potluck) appData.potluck = [];
         } else {
-          // Initialize DB with defaults
           db.ref('friendsgiving_app').set(appData);
         }
         renderApp();
@@ -983,8 +983,13 @@
       });
     }
 
-    // ARTWORK & THEME
+    // ARTWORK & THEME (HOST ONLY ACCESS)
     function openImageModal() {
+      if (!appData.isHostUnlocked) {
+        alert("Only the host can customize the graphic or banner theme. Please login as host first!");
+        handleHostAccessToggle();
+        return;
+      }
       document.getElementById('image-modal').classList.remove('hidden');
     }
 
